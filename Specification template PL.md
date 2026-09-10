@@ -2,7 +2,7 @@
 
 > **[Szablon STC — usuń ten callout przed użyciem.]** **Pierwszy** dokument projektu i jedyny, który właściciel pisze sam. Powstaje przed `Logic.md` i jest celowo nietechniczny: czego chcesz i jak sobie wyobrażasz, że to działa — nie jak zostanie zbudowane. Angielski bliźniak leży obok jako `Specification Template.md`; wybierz jeden język i w nim pisz treść. Układ jest identyczny. Wypełniony plik projektu zawsze nazywa się `Specification.md`, niezależnie od języka, w którym go napisałeś.
 
-**To piszesz Ty. Nie agent.** Asystent może zadawać pytania, wskazywać, gdzie dwa Twoje zdania się nie zgadzają, mówić, gdy czegoś brakuje, ostrzegać, gdy §4 rozjechał się z §2, i przenieść linię do sekcji, do której faktycznie należy. Nie wolno mu tu niczego projektować, proponować architektury ani wypełniać tego za Ciebie.
+**To piszesz Ty. Nie agent.** Asystent może zadawać pytania, wskazywać, gdzie dwa Twoje zdania się nie zgadzają, mówić, gdy czegoś brakuje, ostrzegać, gdy §5 rozjechał się z §2, i przenieść linię do sekcji, do której faktycznie należy. Nie wolno mu tu niczego projektować, proponować architektury ani wypełniać tego za Ciebie.
 
 **Pisz treścią w języku, w którym myślisz.** Zwykłe zdania są lepsze niż techniczne. Jeśli sięgasz po słowo, które musiałbyś sprawdzić, prawdopodobnie opisujesz *jak*, a nie *co*.
 
@@ -24,7 +24,7 @@
 
 ## 3. Pierwszy szkic struktury
 
-`<Ta sekcja nie jest opcjonalna. Narysuj kawałki, które sobie wyobrażasz, w formie poniżej — ta forma jest tu po to: późniejsze przebiegi w §5 wiszą na tych nazwach, a Logic.md §2.1 czyta ten szkic jako wejście. Zagnieżdżone drzewo z jednym zdaniem odpowiedzialności w każdej linii to sposób, w jaki struktura jest wprowadzana w tym dokumencie. Zamień przykładowe nazwy na swoje; kształt zostaw.>`
+`<Ta sekcja nie jest opcjonalna. Narysuj kawałki, które sobie wyobrażasz, w formie poniżej — ta forma jest tu po to: późniejsze przebiegi w §4 wiszą na tych nazwach, a Logic.md §2.1 czyta ten szkic jako wejście. Zagnieżdżone drzewo z jednym zdaniem odpowiedzialności w każdej linii to sposób, w jaki struktura jest wprowadzana w tym dokumencie. Zamień przykładowe nazwy na swoje; kształt zostaw.>`
 
 ```text
 <katalog główny>
@@ -42,37 +42,38 @@
 
 > **Nic tutaj nie jest decyzją.** To Twoja pierwsza mapa, i `Logic.md` może ją wymienić w całości — inny podział, inne nazwy, inna liczba kawałków — i to nie jest porażka żadnego z dokumentów. Każdą linię pisz jako *odpowiedzialność* („część, która rozmawia z ludźmi”, „część, która pamięta”), a nie jako nazwę pliku, a jeśli już wiesz, że coś musi być osobnym kawałkiem z jakiegoś powodu — napisz ten powód w tej linii. Zagnieżdżanie jest dozwolone i oczekiwane: część, która zawiera części, to sposób, w jaki pokazujesz, gdzie coś mieszka. Części, które narysujesz, ale świadomie jeszcze nie chcesz, zostają na drzewie *i* należą do §6.2.
 
-## 4. Co to ma robić
+## 4. Jak to ma działać
 
-`<Jedna numerowana pozycja na każdą rzecz, której chcesz. Tu trzymaj je krótko — przebieg krok po kroku, jak sobie wyobrażasz działanie, jest w §5. Numeruj F1, F2, … i nigdy nie przenumerowuj, nawet jeśli którąś skasujesz: Logic.md będzie cytować te numery, i każde późniejsze pytanie o dryf też.>`
+`<Serce dokumentu i miejsce, w którym możesz być tak szczegółowy, jak chcesz. Grupuj tak, jak naprawdę myślisz — po częściach („kawałek od wiadomości”, „kawałek, który pamięta”) albo po ficzerach. Każdy przebieg jako ponumerowana sekwencja zwykłym językiem: najpierw to, potem tamto, jeśli X to Y, w przeciwnym razie Z. Przebieg może mieć dwadzieścia kroków, jeśli ma dwadzieścia kroków. Gdzie krok niesie prawdziwą liczbę — ile tego przychodzi, jak często, jak duże — napisz ją w tym kroku, bo tam jest jej miejsce; nie wymyślaj jej: brak liczby to pytanie, które ktoś Ci zada, a zmyślona liczba staje się później zamrożonym limitem.>`
 
-**F1 — `<krótka nazwa>`**
-- **Czego chcę:** `<jedno albo dwa zdania>`
-- **Jak poznam, że zadziałało:** `<co byś zobaczył, przeczytał, dostał albo zmierzył. „Dostanę raport do ósmej” da się sprawdzić. „Działa poprawnie” — nie.>`
-- **Ile / jak często:** `<tylko tam, gdzie to ma znaczenie — „ze trzysta dziennie”, „pliki do dwóch gigabajtów”, „dwa razy w miesiącu”. Lepiej pominąć, niż wymyślić liczbę: zmyślona liczba tutaj staje się później zamrożonym limitem.>`
-- **Jak ważne:** `<musi być / chciałbym / kiedyś>`
-
-**F2 — `<krótka nazwa>`** `<...powtórz. Pozycją może być zdolność, zachowanie, doświadczenie albo pytanie, na które ta rzecz ma umieć odpowiedzieć.>`
-
-> **Dwa nawyki.** Jeśli do opisania pozycji potrzebujesz słowa „i”, to pewnie są dwie pozycje — będą budowane i odbierane osobno. A jeśli nie umiesz powiedzieć, jak poznasz, że zadziałało, to jeszcze nie jest pozycja; to życzenie, i zostanie zbudowane jako czyjś domysł. *Jeśli uczciwa odpowiedź brzmi „musiałbym spojrzeć na wyniki i ocenić je” — napisz dokładnie to* — to jest legalna odpowiedź, i mówi dokumentowi technicznemu, że ta część potrzebuje spisanej reguły, co liczy się jako wystarczająco dobre.
-
-## 5. Jak sobie wyobrażam, że to działa
-
-`<Serce dokumentu i miejsce, w którym możesz być tak szczegółowy, jak chcesz. Grupuj tak, jak naprawdę myślisz — po częściach („kawałek od wiadomości”, „kawałek, który pamięta”) albo po ficzerach. Każdy przebieg jako ponumerowana sekwencja zwykłym językiem: najpierw to, potem tamto, jeśli X to Y, w przeciwnym razie Z. Przebieg może mieć dwadzieścia kroków, jeśli ma dwadzieścia kroków.>`
-
-### `<nazwa części albo ficzera>` — obsługuje `<F1, F3>`
+### `<nazwa części albo ficzera>`
 
 1. `<co się dzieje najpierw — co przychodzi, albo co to odpala>`
 2. `<...potem co, łącznie z rozgałęzieniami: „jeśli to polecenie, wykonaj je i nie traktuj jak rozmowy”>`
 3. `<...aż do tego, co wychodzi, i co zostaje zapamiętane>`
 
-**Co ma się stać, gdy to padnie:** `<Twoimi słowami — spróbuj jeszcze raz po cichu, powiedz mi, zatrzymaj wszystko, jedź dalej bez tej części. To decyzja biznesowa, nie techniczna, i jeśli nie podejmiesz jej tutaj, ktoś podejmie ją za Ciebie.>`
+**W przypadku awarii lub błędu:** `<Twoimi słowami — spróbuj jeszcze raz po cichu, powiedz mi, zatrzymaj wszystko, jedź dalej bez tej części. To decyzja biznesowa, nie techniczna, i jeśli nie podejmiesz jej tutaj, ktoś podejmie ją za Ciebie.>`
 
 ### `<następna część>` `<...powtórz>`
 
 > **Zostań powyżej linii kodu.** Sekwencje w stylu „sprawdź, czy nadawca jest na mojej liście, a jeśli nie — zignoruj” są dokładnie tym, o co chodzi. „Wczytaj ID do zbioru przy starcie, żeby było szybko” jest o jeden poziom za głęboko — to decyzja, a decyzje należą do `Logic.md`. Gdy złapiesz się na nazywaniu mechanizmu zamiast zachowania, opisz to, co byś *zobaczył*.
 
-## 6. Granice — czego nie wolno, czego nie budujemy, i co i tak narzucam
+## 5. Co to ma robić
+
+`<Lista wywiedziona z §4: przeczytaj własne przebiegi i nazwij po kolei to, co każdy z nich daje. Jedna numerowana pozycja na każdą rzecz, którą ta rzecz ma umieć — trzymaj je krótko, bo cały szczegół stoi już wyżej. Numeruj F1, F2, … i nigdy nie przenumerowuj, nawet jeśli którąś skasujesz: Logic.md będzie cytować te numery, i każde późniejsze pytanie o dryf też.>`
+
+**F1 — `<krótka nazwa>`**
+- **Definicja:** `<jedno albo dwa zdania — co to jest i co robi>`
+- **Oczekiwany rezultat:** `<co byś zobaczył, przeczytał, dostał albo zmierzył, tak żeby ktoś inny sprawdził to bez pytania Ciebie. „Dostanę raport do ósmej” da się sprawdzić. „Działa poprawnie” — nie.>`
+- **Realizowane przez:** `<nazwy przebiegów z §4, które to realizują — albo „—”, jeśli to własność albo zdolność, a nie sekwencja>`
+
+**F2 — `<krótka nazwa>`** `<...powtórz. Pozycją może być zdolność, zachowanie, doświadczenie albo pytanie, na które ta rzecz ma umieć odpowiedzieć.>`
+
+> **Trzy nawyki.** Jeśli do opisania pozycji potrzebujesz słowa „i”, to pewnie są dwie pozycje — będą budowane i odbierane osobno. Jeśli nie umiesz napisać oczekiwanego rezultatu, to jeszcze nie jest pozycja; to życzenie, i zostanie zbudowane jako czyjś domysł. *Jeśli uczciwa odpowiedź brzmi „musiałbym spojrzeć na wyniki i ocenić je” — napisz dokładnie to* — to jest legalna odpowiedź, i mówi dokumentowi technicznemu, że ta część potrzebuje spisanej reguły, co liczy się jako wystarczająco dobre. A jeśli „realizowane przez” zostaje puste i nie umiesz powiedzieć, że to własność — to nie jest brak w tej linii, tylko brakujący przebieg w §4.
+>
+> **Nie ma tu ważniejszych i mniej ważnych.** Wszystko na tej liście jest w tej wersji, w całości. Rzecz, której chcesz „kiedyś” albo „jeśli się uda”, nie jest pozycją z połową wagi — jest wpisem w §6.2, i to jedyne uczciwe miejsce, gdzie może stanąć. Kolejności budowania ten plik nie ustala i nie próbuj jej tu przemycić: bierze się ona z zależności między częściami, i ustala ją `Railroad.md`.
+
+## 6. Rules of Engagement
 
 `<Trzy krótkie listy płaskich punktów. Bez prozy, bez akapitów — to jedyna sekcja, w której zdanie ucięte jest lepsze niż wypieszczone. Przykłady poniżej pokazują długość i ton, w jaki celujesz; podmień je.>`
 
@@ -104,7 +105,7 @@
 >
 > Przypadek, na którym potykają się wszyscy: *„nie może potrzebować internetu”*. Jeśli tam, gdzie to chodzi, nie ma połączenia — to **§7**. Jeśli jest, a Ty wolisz, żeby od niego nie zależało — to **6.3**, i to *dlaczego* jest połową wartą zapisania.
 
-## 7. Jak to żyje w świecie
+## 7. Docelowe Rules of Engagement
 
 `<Siedem pytań. Na każde odpowiedz własnym zdaniem, w miejscu po nim; kursywa pod spodem to podpowiedź, jakiego rodzaju odpowiedzi się tu spodziewamy, a nie menu do wyboru. **„Nie wiem” jest pełną odpowiedzią** — uczciwa luka zostaje później rozwiązana, zmyślona zostaje zamrożona w projekcie.>`
 
@@ -129,7 +130,7 @@
 >
 > **Nadal nie należy ani tu, ani tam:** toolchain. *„Musi działać offline na małym urządzeniu”* to teren. *„Użyj tego frameworka i tej bazy”* to decyzja, i zostaje w `Logic.md` — podjęta wobec wszystkiego, co tu napisane, a nie wybrana, zanim ktokolwiek wiedział, co ta rzecz ma robić.
 
-## 8. Jak to jest dzisiaj **[OPCJONALNE — skasuj tę sekcję, jeśli ta rzecz nie istnieje jeszcze w żadnej formie]**
+## 8. Stan obecny w momencie pisania dokumentacji **[OPCJONALNE — skasuj tę sekcję, jeśli ta rzecz nie istnieje jeszcze w żadnej formie]**
 
 `<Tylko jeśli jest jakiś obecny sposób robienia tego: ręczne kroki, arkusz, kopiuj-wklej, „pamiętam, żeby to robić w piątki”. Jeśli projekt jest nowy i nie ma poprzednika — skasuj sekcję. Pusta sekcja jest gorsza niż nieobecna.>`
 
@@ -145,13 +146,13 @@
 |---|---|---|---|
 | 1 | `<...>` | `<...>` | `<F3 / §2 / §6>` |
 
-## 11. Co będzie później — uprzedzenie, nie prośba
+## 11. Dalsze plany rozwoju — zapowiedź, nie zamówienie
 
 `<Kierunki, których jesteś już w miarę pewien i których świadomie nie specyfikujesz: „docelowo to obsłuży cały zespół, nie tylko mnie”, „w pewnym momencie dane będą musiały leżeć tam, gdzie inni je przeczytają”, „spodziewam się, że kiedyś będę chciał, żeby chodziło z harmonogramu”. Napisz, czego się spodziewasz, i z grubsza kiedy, jeśli masz jakieś z grubsza kiedy. **Nie** opisuj, jak to ma działać — to jest ta część, która zmienia tę sekcję z pożytecznej w szkodliwą.>`
 
 > **Czym to się różni od §6.2.** Tamta lista to **nie**: coś, czego chcesz, o co teraz nie prosisz, a dokument techniczny zapisuje to jako pracę odłożoną. Ta sekcja to **tak, kiedyś**: kierunek, w który już wierzysz, i o którego zbudowanie, zaplanowanie ani uwzględnienie nikt nie jest proszony. Oba stoją poza tą wersją — różnica jest w tym, że jedno zostało odrzucone, a drugie przewidziane. Jeden haczyk wart znajomości: linia, która nazywa tu konkretny silnik albo maszynę, nie jest kierunkiem — jest ograniczeniem, które już wybrałeś, i należy do §6.3, gdzie da się ją wycenić.
 
-> **Jedna reguła, która nie pozwala tej sekcji zaszkodzić — może rozstrzygnąć remis, nigdy nie może kupić struktury.** Tam, gdzie dwa projekty są poza tym równe, lepszy jest ten, który nie zamyka drogi do czegoś tu nazwanego — i to jest cała wartość zapisania tego. Nic z tej listy nie może być powołane jako powód, dla którego abstrakcja, flaga konfiguracyjna, punkt rozszerzeń albo zapasowa warstwa istnieje **dziś**. System pluginów zbudowany, bo ta sekcja wspomina pluginy, jest dokładnie tą porażką, przed którą stoją reguły przeciw przeinżynierowaniu w dokumencie technicznym — a ta sekcja czyni ją łatwiejszą do osiągnięcia, i właśnie dlatego reguła jest zapisana tutaj, a nie zostawiona zdrowemu rozsądkowi. To samo dotyczy Ciebie: jeśli złapiesz się na pisaniu kroków, rozgałęzień albo kształtów dla czegoś z tej listy, przestało to być uprzedzeniem i stało się pozycją z §4, o którą nigdy nie zdecydowałeś się poprosić. Przenieś to albo wytnij.
+> **Jedna reguła, która nie pozwala tej sekcji zaszkodzić — może rozstrzygnąć remis, nigdy nie może kupić struktury.** Tam, gdzie dwa projekty są poza tym równe, lepszy jest ten, który nie zamyka drogi do czegoś tu nazwanego — i to jest cała wartość zapisania tego. Nic z tej listy nie może być powołane jako powód, dla którego abstrakcja, flaga konfiguracyjna, punkt rozszerzeń albo zapasowa warstwa istnieje **dziś**. System pluginów zbudowany, bo ta sekcja wspomina pluginy, jest dokładnie tą porażką, przed którą stoją reguły przeciw przeinżynierowaniu w dokumencie technicznym — a ta sekcja czyni ją łatwiejszą do osiągnięcia, i właśnie dlatego reguła jest zapisana tutaj, a nie zostawiona zdrowemu rozsądkowi. To samo dotyczy Ciebie: jeśli złapiesz się na pisaniu kroków, rozgałęzień albo kształtów dla czegoś z tej listy, przestało to być uprzedzeniem i stało się pozycją z §5, o którą nigdy nie zdecydowałeś się poprosić. Przenieś to albo wytnij.
 
 ---
 
@@ -159,9 +160,10 @@
 
 To nie formalność — przejście tej listy sprawia, że dokument techniczny da się napisać bez zgadywania.
 
-- [ ] **Każdą pozycję z §4 da się wywieść z założenia w §2**, a §2 nie obiecuje kierunku, którego §4 nie obsługuje.
-- [ ] Każda pozycja w §4 ma **„jak poznam, że zadziałało”**, które ktoś inny sprawdzi bez pytania mnie.
-- [ ] Każda część w §5 mówi **co ma się stać, gdy to padnie**.
+- [ ] **Każdą pozycję z §5 da się wywieść z założenia w §2**, a §2 nie obiecuje kierunku, którego §5 nie obsługuje.
+- [ ] Każda pozycja w §5 ma **oczekiwany rezultat**, który ktoś inny sprawdzi bez pytania mnie.
+- [ ] **Każda pozycja z §5 wskazuje przebieg z §4, który ją realizuje** — albo jawnie mówi, że jest własnością, a nie sekwencją; i każdy przebieg z §4 realizuje przynajmniej jedną pozycję.
+- [ ] Każda część w §4 ma wypełnione **„W przypadku awarii lub błędu”**.
 - [ ] **§6.1, §6.2 i §6.3 mają wpisy**, a §6.2 w szczególności nie jest pusta.
 - [ ] **Każde pytanie w §7 ma odpowiedź moimi słowami** — żadna podpowiedź nie stoi w miejscu odpowiedzi, a tam, gdzie taka jest prawda, napisane jest „nie wiem”.
 - [ ] **Na pytanie z §7 „czy ma chodzić samo?” jest odpowiedź** — albo fakt, że nie wiem, jest w §9.

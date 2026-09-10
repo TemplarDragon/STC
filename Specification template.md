@@ -2,7 +2,7 @@
 
 > **[STC template — delete this callout before use.]** The **first** document of a project and the only one its owner writes alone. It comes before `Logic.md` and it is deliberately non-technical: what you want and how you imagine it working — not how it will be built. A Polish twin lives beside this file as `Specification Template PL.md`; pick one language and write the content in that language. The structure is identical. The filled project file is always named `Specification.md`, whichever language you wrote it in.
 
-**You write this. Not the agent.** An assistant may ask questions, point out where two of your sentences disagree, tell you when something is missing, warn you when §4 has drifted away from §2, and move a line to the section it actually belongs in. It must not design anything here, must not propose an architecture, and must not fill it in for you.
+**You write this. Not the agent.** An assistant may ask questions, point out where two of your sentences disagree, tell you when something is missing, warn you when §5 has drifted away from §2, and move a line to the section it actually belongs in. It must not design anything here, must not propose an architecture, and must not fill it in for you.
 
 **Write the content in whatever language you think in.** Plain sentences beat technical ones. If you reach for a word you would have to look up, you are probably describing *how* instead of *what*.
 
@@ -24,7 +24,7 @@
 
 ## 3. A first sketch of the structure
 
-`<This section is not optional. Draw the pieces you imagine, in the form below — that form is the point: later walkthroughs in §5 hang off these names, and Logic.md §2.1 reads this sketch as input. A nested tree with a one-line responsibility on each line is how the structure is introduced in this document. Replace the example names with yours; keep the shape.>`
+`<This section is not optional. Draw the pieces you imagine, in the form below — that form is the point: later walkthroughs in §4 hang off these names, and Logic.md §2.1 reads this sketch as input. A nested tree with a one-line responsibility on each line is how the structure is introduced in this document. Replace the example names with yours; keep the shape.>`
 
 ```text
 <root catalogue>
@@ -42,37 +42,38 @@
 
 > **Nothing here is a decision.** This is your first map, and `Logic.md` may replace it entirely — a different split, different names, different number of pieces — without that being a failure of either document. Write each line as a *responsibility* ("the part that talks to people", "the part that remembers"), not as a file name, and if you already know something has to be a separate piece for a reason, say the reason on that line. Nesting is allowed and expected: a part that contains parts is how you show where something lives. Parts you draw but deliberately do not want yet stay on the tree *and* belong in §6.2.
 
-## 4. What it should do
+## 4. How it should work
 
-`<One numbered item per thing you want. Keep each one short here — the step-by-step of how you imagine it working goes in §5. Number them F1, F2, … and never renumber, even if you delete one: Logic.md will cite these numbers, and so will every later question about drift.>`
+`<The heart of the document, and the place to be as detailed as you like. Group it whichever way you actually think — by part ("the bit that handles messages", "the bit that remembers") or by feature. Write each one as a numbered sequence in plain language: first this, then that, if X then Y, otherwise Z. A walkthrough may run to twenty steps if it has twenty steps. Where a step carries a real figure — how many arrive, how often, how big — write it into that step, because that is where it belongs; do not invent one: a missing figure is a question somebody will ask you, while a made-up figure becomes a frozen limit later.>`
 
-**F1 — `<short name>`**
-- **What I want:** `<one or two sentences>`
-- **How I will know it worked:** `<what you would see, read, receive, or measure. "It sends me the report by eight" is checkable. "It works correctly" is not.>`
-- **How much / how often:** `<only where it matters — "about five hundred a day", "files up to two gigabytes", "twice a month". Leave it out rather than inventing a number: a made-up figure here becomes a frozen limit later.>`
-- **How important:** `<must have / would like / one day>`
-
-**F2 — `<short name>`** `<...repeat. An item may be a capability, a behaviour, an experience, or a question the thing should be able to answer.>`
-
-> **Two habits.** If describing an item needs the word "and", it is probably two items — they will be built and accepted separately. And if you cannot say how you would know it worked, it is not yet an item; it is a wish, and it will be built as somebody's guess. *If the honest answer is "I would have to look at the results and judge them", write exactly that* — it is a legitimate answer, and it tells the technical document that this part needs a written rule for what counts as good enough.
-
-## 5. How I imagine it working
-
-`<The heart of the document, and the place to be as detailed as you like. Group it whichever way you actually think — by part ("the bit that handles messages", "the bit that remembers") or by feature. Write each one as a numbered sequence in plain language: first this, then that, if X then Y, otherwise Z. A walkthrough may run to twenty steps if it has twenty steps.>`
-
-### `<name of the part or the feature>` — serves `<F1, F3>`
+### `<name of the part or the feature>`
 
 1. `<what happens first — what arrives, or what starts it>`
 2. `<...then what, including the branches: "if it is a command, do it and do not treat it as conversation">`
 3. `<...through to what comes out, and what gets remembered>`
 
-**What should happen when this goes wrong:** `<in your terms — retry quietly, tell me, stop everything, carry on without that part. This is a business decision, not a technical one, and if you do not make it here somebody makes it for you.>`
+**In case of failure or error:** `<in your terms — retry quietly, tell me, stop everything, carry on without that part. This is a business decision, not a technical one, and if you do not make it here somebody makes it for you.>`
 
 ### `<next part>` `<...repeat>`
 
 > **Stay above the code line.** Sequences like "check whether the sender is on my list, and if not, ignore it" are exactly right. "Load the IDs into a set at startup for fast lookup" is one level too deep — that is a decision, and decisions belong to `Logic.md`. When you catch yourself naming a mechanism instead of a behaviour, describe what you would *observe* instead.
 
-## 6. Limits — what it must not do, what we are not building, and what I am imposing anyway
+## 5. What it should do
+
+`<A list derived from §4: read back your own walkthroughs and name, one by one, what each of them delivers. One numbered item per thing this must be able to do — keep them short, because all the detail already stands above. Number them F1, F2, … and never renumber, even if you delete one: Logic.md will cite these numbers, and so will every later question about drift.>`
+
+**F1 — `<short name>`**
+- **Definition:** `<one or two sentences — what it is and what it does>`
+- **Expected result:** `<what you would see, read, receive, or measure, such that someone else could check it without asking you. "It sends me the report by eight" is checkable. "It works correctly" is not.>`
+- **Delivered by:** `<the names of the §4 walkthroughs that deliver it — or "—" if this is a property or a capability rather than a sequence>`
+
+**F2 — `<short name>`** `<...repeat. An item may be a capability, a behaviour, an experience, or a question the thing should be able to answer.>`
+
+> **Three habits.** If describing an item needs the word "and", it is probably two items — they will be built and accepted separately. If you cannot write the expected result, it is not yet an item; it is a wish, and it will be built as somebody's guess. *If the honest answer is "I would have to look at the results and judge them", write exactly that* — it is a legitimate answer, and it tells the technical document that this part needs a written rule for what counts as good enough. And if "delivered by" stays empty and you cannot say that the item is a property, that is not a gap in the line — it is a missing walkthrough in §4.
+>
+> **Nothing here is more important than anything else.** Everything on this list is in this version, in full. A thing you want "one day" or "if it works out" is not an item at half weight — it is an entry in §6.2, and that is the only honest place for it to stand. This file does not set the build order, and do not try to smuggle one in: that order comes from the dependencies between the parts, and `Railroad.md` sets it.
+
+## 6. Rules of Engagement
 
 `<Three short lists of flat bullets. No prose, no paragraphs — this is the one section where a blunt sentence beats a careful one. The examples below show the length and tone to aim for; replace them.>`
 
@@ -104,7 +105,7 @@
 >
 > The case that catches everyone: *"it must not need the internet"*. If there is no connection where it runs, that is **§7**. If there is one and you would rather it did not depend on it, that is **6.3** — and the *why* is the half worth writing down.
 
-## 7. How it lives in the world
+## 7. Target Rules of Engagement
 
 `<Seven questions. Answer each one in a sentence of your own, in the slot after it; the italic line underneath is a hint about the kind of answer, not a menu to pick from. **"I do not know" is a complete answer** — an honest gap gets resolved later, an invented one gets frozen into the design.>`
 
@@ -129,7 +130,7 @@
 >
 > **Still belonging in neither:** a toolchain. *"It must work offline on a small device"* is terrain. *"Use this framework and that database"* is a decision, and it stays in `Logic.md` — made against everything written here, rather than picked before anyone knew what the thing had to do.
 
-## 8. What happens today **[OPTIONAL — delete this section if the thing does not exist in any form yet]**
+## 8. Current status at the time of writing the documentation **[OPTIONAL — delete this section if the thing does not exist in any form yet]**
 
 `<Only if there is a current way of doing this: the manual steps, the spreadsheet, the copy-paste, the "I remember to do it on Fridays". If the project is new and there is no predecessor, delete the section — an empty section is worse than an absent one.>`
 
@@ -145,13 +146,13 @@
 |---|---|---|---|
 | 1 | `<...>` | `<...>` | `<F3 / §2 / §6>` |
 
-## 11. What comes later — a heads-up, not a request
+## 11. Further development plans — a heads-up, not a request
 
 `<Directions you are already fairly sure about and are deliberately not specifying: "eventually this serves the whole team, not just me", "at some point the data will have to sit somewhere other people can read it", "I expect I will want it running on a schedule one day". Say what you expect, and roughly when if you have a rough when. Do **not** describe how it should work — that is the part that turns this section from useful into harmful.>`
 
 > **How this differs from §6.2.** That list is a **no**: something you want, are not asking for now, and the technical document records as deferred work. This section is a **yes, eventually**: a direction you already believe in, which nobody is being asked to build, plan or accommodate. Both sit outside this version — the difference is that one was declined and the other was foreseen. One catch worth knowing: a line here that names a specific engine or machine is not a direction, it is a constraint you have already chosen, and it belongs in §6.3 where it can be costed.
 
-> **The one rule that stops this section doing damage — it may break a tie, it may never buy a structure.** Where two designs are otherwise equal, the one that does not foreclose something named here is the better choice, and that is the entire value of writing it down. Nothing on this list may be cited as the reason an abstraction, a configuration flag, an extension point or a spare layer exists **today**. A plugin system built because this section mentions plugins is precisely the failure the technical document's over-engineering rules exist to prevent — and this section makes that failure easier to reach, which is why the rule is written here rather than left to good judgement. The same applies to you: if you catch yourself writing steps, branches or shapes for something on this list, it has stopped being a heads-up and become a §4 item you never decided to ask for. Move it or cut it.
+> **The one rule that stops this section doing damage — it may break a tie, it may never buy a structure.** Where two designs are otherwise equal, the one that does not foreclose something named here is the better choice, and that is the entire value of writing it down. Nothing on this list may be cited as the reason an abstraction, a configuration flag, an extension point or a spare layer exists **today**. A plugin system built because this section mentions plugins is precisely the failure the technical document's over-engineering rules exist to prevent — and this section makes that failure easier to reach, which is why the rule is written here rather than left to good judgement. The same applies to you: if you catch yourself writing steps, branches or shapes for something on this list, it has stopped being a heads-up and become a §5 item you never decided to ask for. Move it or cut it.
 
 ---
 
@@ -159,9 +160,10 @@
 
 Not a formality — passing this list is what makes the technical document writable without guessing.
 
-- [ ] **Every item in §4 can be traced back to the premise in §2**, and §2 does not promise a direction that §4 ignores.
-- [ ] Every item in §4 has a **"how I will know it worked"** that someone else could check without asking me.
-- [ ] Every part in §5 says **what should happen when it goes wrong**.
+- [ ] **Every item in §5 can be traced back to the premise in §2**, and §2 does not promise a direction that §5 ignores.
+- [ ] Every item in §5 has an **expected result** that someone else could check without asking me.
+- [ ] **Every item in §5 names the §4 walkthrough that delivers it** — or says outright that it is a property rather than a sequence; and every §4 walkthrough delivers at least one item.
+- [ ] Every part in §4 has its **"In case of failure or error"** line filled in.
 - [ ] **§6.1, §6.2 and §6.3 all have entries**, and §6.2 in particular is not empty.
 - [ ] **Every question in §7 has an answer in my own words** — no hint left standing in place of an answer, and "I do not know" written where that is the truth.
 - [ ] **§7's "should it run by itself?" is answered** — or the fact that I do not know is written in §9.

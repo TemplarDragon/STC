@@ -24,18 +24,18 @@
 |---|---|
 | §2 the premise, and its general rules | §1 (Design Principles) — the premise is where a principle comes from, and a principle nothing in the premise supports is one you invented |
 | §3 the structure sketch | §2.1, as **input only**. It may be replaced entirely; where it is, say so in one line, because the owner drew it for a reason and deserves to know the reason failed |
-| §4's `F#` items | §3.2/§3.3, and each one keeps its `F#` so it stays traceable |
-| §4's "how much / how often" | Appendix C (as pinned values) — and the absence of a figure is a **question to ask**, never a number to invent |
-| §5's walkthroughs | §3.3 (per module) and §8.5 (the end-to-end flow); the owner's branches become the decisions, and their reasoning becomes the *why* |
-| §5's "what should happen when this goes wrong" | §9.3's failure matrix, and §3.3's failure behaviour |
+| §4's walkthroughs | §3.3 (per module) and §8.5 (the end-to-end flow); the owner's branches become the decisions, and their reasoning becomes the *why* |
+| §4's "in case of failure or error" | §9.3's failure matrix, and §3.3's failure behaviour |
+| the figures written into §4's steps ("how many, how often, how big") | Appendix C (as pinned values) — and the absence of a figure is a **question to ask**, never a number to invent. The specification has no separate field for these; they arrive inside the step that carries them, so read the walkthroughs for numbers rather than expecting a list |
+| §5's `F#` items | §3.2/§3.3, and each one keeps its `F#` so it stays traceable. Each item names the §4 walkthrough that delivers it, which is the owner's own coverage check — an item marked as a property rather than a sequence is the one legitimate exception |
 | §6.1 (must never) | §3.5 (rules the system must never break) |
 | §6.2 (not in this version) | §13 (Deferred) |
 | §6.3 (imposed anyway) | §0 TARGET ENVIRONMENT and Appendix C — **flagged as choices**: each one may be challenged here with a cost attached, and the owner decides. This is the one list in the specification allowed to name a technology, a machine or a place, so it is also the only place a toolchain preference can legitimately have arrived from |
-| §7's questions | **the profile in §0.1** — "should it run by itself" seeds P6b/P7, "what starts it / who receives" seeds P1a/P1b, "what information" seeds P10, "what do you prefer on failure" seeds §9, and a judged "how I will know it worked" in §4 seeds P11 |
+| §7's questions | **the profile in §0.1** — "should it run by itself" seeds P6b/P7, "what starts it / who receives" seeds P1a/P1b, "what information" seeds P10, "what do you prefer on failure" seeds §9, and a judged "expected result" in §5 seeds P11 |
 | §7's "where will it end up running" | §0 TARGET ENVIRONMENT — **as terrain, not as a choice**. The distinction is load-bearing: a §6.3 constraint may be revisited with a price attached, terrain may only be designed around. Keep the two apart here too, so a later reader can tell which assumptions are negotiable |
 | §7's "where will it be built" | `manuals/DevLog.md`'s machine-notes table, seeded on day one rather than discovered in the third session — and §0's one re-litigated decision about the environment, if the build machine and the target differ |
 | §9 open questions | either resolved here as a decision with its reasoning, or carried into §13 — never left open in both documents |
-| §11 "what comes later" | **nowhere structural.** Record it in §0 as known direction and treat it as non-normative: it may break a tie between two otherwise-equal designs by picking the one that does not foreclose it, and it may **never** be cited as the reason an abstraction, a flag, an extension point or a spare layer exists today. It is not deferred work, so it does not belong in §13 either — nobody asked for it. A line there that named a specific engine was a choice in disguise and belongs in §6.3 |
+| §11 (further development plans) | **nowhere structural.** Record it in §0 as known direction and treat it as non-normative: it may break a tie between two otherwise-equal designs by picking the one that does not foreclose it, and it may **never** be cited as the reason an abstraction, a flag, an extension point or a spare layer exists today. It is not deferred work, so it does not belong in §13 either — nobody asked for it. A line there that named a specific engine was a choice in disguise and belongs in §6.3 |
 
 **THE BUILDER'S NOTEBOOK (`manuals/DevLog.md`):** the Builder keeps an append-only journal of what it did, what broke, and what state it left the tree in — the one file it may write. **It is never law and never a decision.** If something in it turns out to matter, it is promoted into *this* document as an amendment, or into `Railroad.md` as a step, and only then does it bind anything. A missing decision is still a `CONTRACT-GAP`, never a log entry.
 
