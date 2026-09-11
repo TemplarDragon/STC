@@ -46,7 +46,7 @@ A "chapter" is one phase below (§4 onward) = one row of the milestone ladder (�
 2. **The step N.M block itself** — its `Frozen surface`, `Logic decisions D#`, `Contract`, `Verify`, `MUST NOT`.
 3. **From the logic doc:** ONLY the `B.8.x` subsection(s) the step's `Freeze refs` name (+ the `§§` it cites) — not the whole logic doc.
 4. **The appendices the step points to:** `R1` (data shapes), `R2` (its stubs), `R3` (verification rules), `R6` (variable homes).
-5. **Once per session, the tail of `manuals/DevLog.md`** — the latest handoff block and the open queue, **not the file**. That is where the previous session (possibly on another machine) recorded what state the tree is in and what the next action was. It is a **journal, not law**: it can tell you where things stand, and it can never tell you what to build or authorise a decision the freeze does not make.
+5. **Once per session, the tail of `codex/DevLog.md`** — the latest handoff block and the open queue, **not the file**. That is where the previous session (possibly on another machine) recorded what state the tree is in and what the next action was. It is a **journal, not law**: it can tell you where things stand, and it can never tell you what to build or authorise a decision the freeze does not make.
 6. **Nothing else.** If the step seems to need more than this, that is a `CONTRACT-GAP` → HALT (do not go hunting for a decision). **Appendices R7 and R8 are Architect-side and are never loaded by a Builder** — R8 in particular is the protocol for auditing the freeze, and a Builder reading it would start negotiating with the law it is supposed to ride. **`Specification.md` is never loaded either**: it is the owner's original ask, frozen in `ARCH/`, and it was superseded by the logic doc on the day that document opened.
 
 > **Sanctioned reference lookup — AI/LLM projects only (does not widen the reading order above).** On projects involving AI/LLM work, the Builder **may** consult the curated **skill base** for *technique and idiom* lookups — how a pattern is normally implemented, what a library's shape is, what a known pitfall looks like, what a working version of this looks like in a real system.
@@ -84,7 +84,7 @@ Any not-yet-built **runtime** dependency is represented by a **stub** that:
 - honours the frozen signature exactly;
 - returns a **typed canned value** (or raises a declared, typed error);
 - logs `STUB:<qualified_name>` on every call;
-- is registered in `/misc/stub_registry.md` (checklist: name · honoured signature · replacing step).
+- is registered in `construction/ledger/stub_registry.md` (checklist: name · honoured signature · replacing step).
 
 A milestone may be **green with stubs present**, but every green milestone **enumerates exactly which stubs remain**. Replacing a stub MUST NOT change any signature → no upstream backtracking.
 
@@ -104,7 +104,7 @@ A chapter (= one phase, = one milestone-ladder row) is a **user-testable MVP inc
 - the chapter's **Acceptance Checklist** (Appendix R3) walked **by the project owner or a human tester** — each line an action plus the expected observation, in the owner's language, not in the code's;
 - **every prior chapter's checklist re-walked** — this is where regression is caught, not at step close;
 - remaining stubs enumerated · the chapter's semantics in logic §7 satisfied;
-- **`directorium_temporarium/` emptied** (`Logic.md` §2.4). Anything in it that turned out to matter is first promoted into the tree by a step that owns it; whatever remains is deleted unread. A chapter does not close over a full scratch bin — that is how a throwaway probe quietly becomes load-bearing.
+- **`construction/<XX>_workspace/` emptied** (`Logic.md` §2.4). Anything in it that turned out to matter is first promoted into the tree by a step that owns it; whatever remains is deleted unread. A chapter does not close over a full scratch bin — that is how a throwaway probe quietly becomes load-bearing.
 - **The chapter evidence artifact — ONE file, three jobs, written at the chapter's last step** (apparatus A3; R3.3 has the full contract). Mk I split this in two — an optional happy-path smoke script and, at Pattern III, a separate probe — and the split cost a second write event without buying a second kind of proof. It is one file now, and it does three things a human walk cannot: it **re-walks the happy path** of accepted chapters as a tripwire so the manual regression does not grow without bound; it **observes the mechanisms rail 6 pinned** — a bucket depth, a refill interval, an ordered effect trace, a gate that must not have been consulted — none of which a person can see by driving the system by hand; and it **provokes the invisible properties** of this chapter — a race, a lost write under two writers, a duplicated effect after a restart, a loop alive but starved. **Absent at Pattern I · the owner's call at Pattern II · mandatory at Pattern III.**
   - **Authorship, and why rail 2 survives it.** The file is written by the **Builder**, at the chapter's last step, and **every observation in it must trace to a `V#` the Architect already wrote.** That is what keeps it evidence rather than criteria: the Builder chooses nothing about what is proven, only how the already-frozen observation is produced. A provocation with no `V#` behind it is the Builder inventing a criterion — forbidden by rail 2, and the reason Mk I insisted the probe was Architect-authored. Naming the constraint this way keeps that guarantee while moving the typing.
   - **Written at the END of the chapter, against settled code — never step by step.** Per-step evidence files were measured on a real project and were **1.36× the size of the product code they observed**, with the same scaffolding written six times; the cost was not the running (a full re-walk of 41 criteria prints six lines) but the **re-cutting**, because an amendment mid-chapter moves the product under every file already written. One file at the end has one write event and nothing to re-cut.
@@ -118,7 +118,7 @@ So the railroad has one siding, and it is narrow:
 1. **Declare it.** The chapter header carries `LONG CHAPTER — <why it cannot be split>`. **"It is a lot of work" is not a reason; "no intermediate state of this is observable" is.** If you cannot write the second kind of sentence, the chapter was splittable.
 2. **Segment the checklist into numbered checkpoints** `C1..Cn`, each anchored to the last step that makes it observable. A checkpoint is a real acceptance walk — action → expected observation — just a partial one.
 3. **Walk each checkpoint when it is reached**, not all at the end. That is the entire point: it converts one unwalkable sitting into several short ones, without pretending the capability shipped earlier than it did.
-4. **Record a passed checkpoint** (date + who walked it) in `misc/`. It is not re-walked later in the same chapter.
+4. **Record a passed checkpoint** (date + who walked it) in `construction/ledger/`. It is not re-walked later in the same chapter.
 5. **The chapter gate** = every checkpoint recorded **+ one short end-to-end pass** of the whole capability. The end-to-end pass is not optional: checkpoints prove the parts, and parts passing is not the same claim.
 6. **Regression scope stays bounded:** later chapters re-walk a LONG chapter's **final end-to-end segment only**, never its checkpoints. Without this rule the regression walk grows without limit and the whole budget argument collapses.
 7. **Hard cap — more than five checkpoints means it was splittable.** Go back to the ladder rather than declaring a longer siding. A chapter needing many checkpoints is a chapter delivering many capabilities, which is the definition of splittable.
@@ -209,20 +209,30 @@ On gap:          HALT + emit "CONTRACT-GAP: <precise description>" (ACCEPTANCE-D
 │
 ├─ <artifacts>/                  # whatever this program reads/writes: CSV/, out/, reports/ — omit if it writes none
 ├─ logs/                         # runtime logs — [gitignored]
-├─ manuals/                      # operator documentation  [optional], plus:
+├─ misc/                         # the PRODUCT's own miscellany — belongs to the program, not to the build
+│
+├─ codex/                        # operator documentation  [optional], plus:
 │   └─ DevLog.md                 # the BUILDER's append-only journal — never law, never a decision.
 │                                #   Lives with the code so it survives a change of machine (§0 reading order)
-├─ misc/                         # OPERATIONAL artifacts, never documentation: stub_registry.md + gate records
-├─ acceptance/                   # CHAPTER-grained verification. Max 2 files per chapter, and no more, ever
-│   ├─ CHAPTER_<n>_ACCEPTANCE.md # human-run checklist: action -> expected observation. ARCHITECT-authored,
-│   │                            #   created by the chapter's FIRST step, read-only for the Builder (R3.2)
-│   └─ evidence_chapter_<n>.*    # the chapter's ONE executable artifact — tripwire + mechanism observation
-│                                #   + provocation. BUILDER-authored at the chapter's LAST step; every
-│                                #   observation traces to an Architect-written V#. Absent at Pattern I,
-│                                #   owner's call at II, mandatory at III (apparatus A3, R3.3)
-└─ directorium_temporarium/      # THE ONLY throwaway directory (Logic.md §2.4) — spikes, probes, one-off
+└─ construction/                 # EVERYTHING that exists only because of the build process (Logic.md §2.4).
+    │                            #   With codex/ these are the root's only two process entries; every
+    │                            #   directory above them belongs to the program being built.
+    ├─ ledger/                   # the build's OWN bookkeeping, never documentation: stub_registry.md +
+    │                            #   gate records. Committed — it is how a later session, on another
+    │                            #   machine or with a different agent, knows what is still a stub and
+    │                            #   which gates were signed. It belongs to the project, never to one agent
+    ├─ acceptance/               # CHAPTER-grained verification. Max 2 files per chapter, and no more, ever
+    │   ├─ CHAPTER_<n>_ACCEPTANCE.md  # human-run checklist: action -> expected observation. ARCHITECT-authored,
+    │   │                             #   created by the chapter's FIRST step, read-only for the Builder (R3.2)
+    │   └─ evidence_chapter_<n>.*     # the chapter's ONE executable artifact — tripwire + mechanism observation
+    │                                 #   + provocation. BUILDER-authored at the chapter's LAST step; every
+    │                                 #   observation traces to an Architect-written V#. Absent at Pattern I,
+    │                                 #   owner's call at II, mandatory at III (apparatus A3, R3.3)
+    └─ <XX>_workspace/           # THE ONLY throwaway directory — ONE PER AGENT (CC_workspace/, CX_workspace/,
+                                 #   …) so two agents never share a scratch area. Spikes, probes, one-off
                                  #   scripts, sample data, temp output. Gitignored. EMPTIED at every chapter
-                                 #   gate. Product code NEVER imports from it. Nothing else litters the root.
+                                 #   gate. Product code NEVER imports from it. No other throwaway directory
+                                 #   exists anywhere in this tree.
 ```
 
 That baseline is a **complete, valid STC tree**. A single-purpose CLI tool or batch script stops here — entry point, config, the work, its utilities, its data files, logs. If that is your project, the block below is not a to-do list; it is a set of things you are correctly not building.
@@ -258,9 +268,9 @@ That baseline is a **complete, valid STC tree**. A single-purpose CLI tool or ba
 
 > [STC: `<domain>`, `<commands>`, `<utils>`, `<artifacts>` and every `<bracketed>` package above are placeholder names — replace them with names drawn from **your** problem domain. Keep the *roles* distinct rather than the *names*: the work, the operator verbs, the dependency-free leaf, the data. A small project legitimately collapses several into one package; don't invent a package that has nothing to own. **The reverse error is the expensive one:** a `<core_subsystems>/` with a single stage in it, or a `<data_layer>/` facade over one CSV file, is indirection that every future step must route through for no benefit.]
 
-> **What counts as "the §0.5 set" for scaffold conformance:** the paths enumerated above, plus `__init__`/index files created by rule at scaffold time, plus root tooling config (`.gitignore`; a test-runner config **only if** a chapter evidence artifact actually needs one). **Excluded from any ownership walk:** VCS metadata, build caches, the *contents* of `storage/**` and `logs/**` (the directories must exist; what accumulates inside is runtime data, gitignored), and the *contents* of `directorium_temporarium/` (disposable by definition — see `Logic.md` §2.4).
+> **What counts as "the §0.5 set" for scaffold conformance:** the paths enumerated above, plus `__init__`/index files created by rule at scaffold time, plus root tooling config (`.gitignore`; a test-runner config **only if** a chapter evidence artifact actually needs one). **Excluded from any ownership walk:** VCS metadata, build caches, the *contents* of `storage/**` and `logs/**` (the directories must exist; what accumulates inside is runtime data, gitignored), and the *contents* of `construction/<XX>_workspace/` (disposable by definition — see `Logic.md` §2.4).
 >
-> **Note the absence of a `tests/` tree — it is deliberate, and it follows from §0's cap rather than from a dislike of the directory.** Verification is chapter-grained: `acceptance/` gains **one checklist per chapter**, written by the Architect at chapter-authoring time, and **one evidence artifact per chapter** beside it, written by the Builder at the chapter's last step (R3.3). Two files per chapter is the whole budget, so there is nothing for a `tests/` tree to hold. Hence also: no per-step test file, no per-step evidence file, no shared fixtures module, no mock library — each of those is either a third file in a chapter (clause 3) or an executable check below the gate (clause 1).
+> **Note the absence of a `tests/` tree — it is deliberate, and it follows from §0's cap rather than from a dislike of the directory.** Verification is chapter-grained: `construction/acceptance/` gains **one checklist per chapter**, written by the Architect at chapter-authoring time, and **one evidence artifact per chapter** beside it, written by the Builder at the chapter's last step (R3.3). Two files per chapter is the whole budget, so there is nothing for a `tests/` tree to hold. Hence also: no per-step test file, no per-step evidence file, no shared fixtures module, no mock library — each of those is either a third file in a chapter (clause 3) or an executable check below the gate (clause 1).
 
 ---
 
@@ -367,18 +377,18 @@ Definition of done: B.1-B.8 / Appendix C validated against the CURRENT logic-doc
 ```text
 Step 0.2 — <spike name>
 Depends on:      0.0.
-Goal:            THROWAWAY code under directorium_temporarium/ proving a specific risky assumption before it's load-bearing
+Goal:            THROWAWAY code under construction/<XX>_workspace/ proving a specific risky assumption before it's load-bearing
                  (e.g. a concurrency primitive under contention, a library integration, a performance budget).
-Creates:         directorium_temporarium/<name>/ — disposable by definition; nothing here is ever imported by the real tree,
+Creates:         construction/<XX>_workspace/<name>/ — disposable by definition; nothing here is ever imported by the real tree,
                  and the whole directory is emptied at the next chapter gate.
 Implement:       the smallest program that proves or disproves the assumption.
-MUST NOT:        write anything outside directorium_temporarium/; keep a spike alive by importing it; leave the finding only
+MUST NOT:        write anything outside construction/<XX>_workspace/; keep a spike alive by importing it; leave the finding only
                  in the code (the code is about to be deleted — that is the point).
 Verify:          - V1: the assumption is proven or disproven, with the observed evidence pasted into the
                        step's completion note
-                 - V2: the finding is recorded OUTSIDE directorium_temporarium/ — in Logic.md as an A-bump if it changes a
-                       decision, otherwise in misc/ where the step that depends on it can cite it
-Definition of done: V1-V2 observed; nothing outside directorium_temporarium/ was created; the finding survives the deletion
+                 - V2: the finding is recorded OUTSIDE construction/<XX>_workspace/ — in Logic.md as an A-bump if it changes a
+                       decision, otherwise in construction/ledger/ where the step that depends on it can cite it
+Definition of done: V1-V2 observed; nothing outside construction/<XX>_workspace/ was created; the finding survives the deletion
                  of everything that produced it.
 ```
 
@@ -396,21 +406,21 @@ MUST NOT:        implement any real business logic here — stubs only, except t
                  Do NOT stand up a test harness, fixture module, or test runner: there is nothing to test yet,
                  and executable observation lives at the chapter gate (§0 clause 1). A runner config, if a
                  later chapter's evidence artifact needs one, arrives with that chapter — not here.
-                 `acceptance/` is created EMPTY at scaffold time
+                 `construction/acceptance/` is created EMPTY at scaffold time
                  and fills two files per chapter, no more: the Architect's checklist, written by that
                  chapter's FIRST step as it is authored, and the Builder's evidence artifact, written by
                  its LAST step (R3.2/R3.3). Neither exists yet at scaffold.
 Verify:          - V1: run the entry point -> it starts and answers on the loopback path without error
                  - V2: the run's log contains a STUB:<name> line for each stub the path crossed
-                 - V3: `acceptance/` exists and is empty; `directorium_temporarium/` exists and is gitignored
+                 - V3: `construction/acceptance/` exists and is empty; `construction/<XX>_workspace/` exists and is gitignored
                  - V4: the tree on disk matches Logic.md §2.1 exactly — no extra file, no missing one
-Definition of done: full §0.5 tree exists; every stub logs STUB:<name> and is in stub_registry.md; V1-V4
+Definition of done: full §0.5 tree exists; every stub logs STUB:<name> and is in construction/ledger/stub_registry.md; V1-V4
                  observed and printed.
 ```
 
 ### Step 0.X — Phase 0 exit gate
 
-**Code-gate.** Signed off when: dependency freeze done · interface frozen (B/C tagged) · every planned spike closed with its finding recorded **outside** `directorium_temporarium/` · scaffold boots with the full stub tree · `directorium_temporarium/` emptied. **Unlocks:** Phase 1 code.
+**Code-gate.** Signed off when: dependency freeze done · interface frozen (B/C tagged) · every planned spike closed with its finding recorded **outside** `construction/<XX>_workspace/` · scaffold boots with the full stub tree · `construction/<XX>_workspace/` emptied. **Unlocks:** Phase 1 code.
 
 ---
 
@@ -454,11 +464,11 @@ On gap:          HALT + emit "CONTRACT-GAP: <precise description>".
 
 `<The last Builder step of every chapter wires the chapter's mode end to end and leaves it demonstrable: the system boots in this mode and the whole path runs. The Builder's deliverable here is a working chapter, the printed evidence, and this chapter's one evidence artifact — and NOT the acceptance walk itself, which is the human's.>`
 
-> **This step also carries `acceptance/evidence_chapter_<n>.*` in its `Creates:` line** (apparatus A3, R3.3) — the one executable artifact of the chapter, written **here**, at the end, against code that has stopped moving. Every observation in it traces to a `V#` already frozen in an earlier step of this chapter; the Builder produces the observation, never the criterion.
+> **This step also carries `construction/acceptance/evidence_chapter_<n>.*` in its `Creates:` line** (apparatus A3, R3.3) — the one executable artifact of the chapter, written **here**, at the end, against code that has stopped moving. Every observation in it traces to a `V#` already frozen in an earlier step of this chapter; the Builder produces the observation, never the criterion.
 
 ### Step 1.A — Chapter 1 acceptance (HUMAN-RUN — the Builder does not perform this step)
 
-**Hand-off.** The Builder stops. The Architect hands the owner `acceptance/CHAPTER_1_ACCEPTANCE.md` — **created back at Step 1.1, whose `Creates:` line names it** (R3.2), and written while the chapter was being authored rather than now. It is a numbered list of *do this → expect to see that*, in the owner's terms. The owner walks it, plus **every prior chapter's checklist** as a regression pass.
+**Hand-off.** The Builder stops. The Architect hands the owner `construction/acceptance/CHAPTER_1_ACCEPTANCE.md` — **created back at Step 1.1, whose `Creates:` line names it** (R3.2), and written while the chapter was being authored rather than now. It is a numbered list of *do this → expect to see that*, in the owner's terms. The owner walks it, plus **every prior chapter's checklist** as a regression pass.
 
 `<Write the checklist while authoring this chapter, not after the code exists — otherwise it degrades into a description of what was built instead of a statement of what was wanted.>`
 
@@ -466,7 +476,7 @@ On gap:          HALT + emit "CONTRACT-GAP: <precise description>".
 
 ### Step 1.X — Phase 1 exit gate
 
-**Code-gate.** Signed off when: the chapter's acceptance checklist walked green **by a human** · prior chapters' checklists re-walked green · remaining stubs enumerated · `directorium_temporarium/` emptied · Logic.md §7 semantics for this mode satisfied. **Unlocks:** Phase 2 code.
+**Code-gate.** Signed off when: the chapter's acceptance checklist walked green **by a human** · prior chapters' checklists re-walked green · remaining stubs enumerated · `construction/<XX>_workspace/` emptied · Logic.md §7 semantics for this mode satisfied. **Unlocks:** Phase 2 code.
 
 ---
 
@@ -490,12 +500,12 @@ On gap:          HALT + emit "CONTRACT-GAP: <precise description>".
 
 1. **The logic doc is law and read-only.** Deviation = `CONTRACT-GAP`, not a fix.
 2. **No identifier exists unless it is in the freeze** (Appendix B/B.8/C); **no runtime dependency exists unless it is in the frozen dependency manifest** (Step 0.0). Both are law — adding either is a `CONTRACT-GAP`, not a fix.
-3. **Criteria are Architect-authored; the gate is human-executed.** Acceptance criteria (`V#`) and chapter checklists are written by the Architect and are **read-only** for the Builder — this is §0 clause 2, and it is the invariant, not the file list that used to stand here. The Builder produces *observations*, never *criteria*. **It authors exactly one verification file in the whole project, and only at a chapter's last step: `acceptance/evidence_chapter_<n>.*` (R3.3), every observation in which traces to a `V#` already frozen.** Anything else executable and verification-shaped — a test file, fixture, harness, mock, testing dependency, or throwaway check script, at step level or beside that artifact — breaks clause 1 or clause 3 and is forbidden regardless of its quality. *(Mk I stated this invariant as "the Builder never creates a verification artifact of any kind", which Mod 0 outgrew when it moved evidence authorship to the Builder; the sentence survived and contradicted R3.3 until Mod 1 A2.)*
+3. **Criteria are Architect-authored; the gate is human-executed.** Acceptance criteria (`V#`) and chapter checklists are written by the Architect and are **read-only** for the Builder — this is §0 clause 2, and it is the invariant, not the file list that used to stand here. The Builder produces *observations*, never *criteria*. **It authors exactly one verification file in the whole project, and only at a chapter's last step: `construction/acceptance/evidence_chapter_<n>.*` (R3.3), every observation in which traces to a `V#` already frozen.** Anything else executable and verification-shaped — a test file, fixture, harness, mock, testing dependency, or throwaway check script, at step level or beside that artifact — breaks clause 1 or clause 3 and is forbidden regardless of its quality. *(Mk I stated this invariant as "the Builder never creates a verification artifact of any kind", which Mod 0 outgrew when it moved evidence authorship to the Builder; the sentence survived and contradicted R3.3 until Mod 1 A2.)*
 4. **Stubs honour signatures; replacing a stub changes no signature.**
 5. **Every passing chapter lists its remaining stubs.**
 6. **Regression lives at chapter boundaries, not step boundaries.** Prior chapters' acceptance checklists are re-walked at each chapter gate; a step close never triggers a suite run. A step is done on its printed `D#`/`V#` checklist (§0.3).
 7. **The file tree belongs to the logic doc.** `Logic.md` §2.1 is the authoritative architecture; a step never invents a path, moves a module, or adds a directory. Needing one is a `CONTRACT-GAP` against §2.1, resolved by an amendment — because where a responsibility lives is a design decision, and design decisions are not made at build time.
-8. **Nothing outside the tree, except `directorium_temporarium/`.** Every build-time artifact that is not delivered product goes there, and only there; it is emptied at each chapter gate and never imported by product code.
+8. **Nothing outside the tree, and every build-time artifact under `construction/`.** Disposable work goes to this agent's own bin, `construction/<XX>_workspace/`, and only there; it is emptied at each chapter gate and never imported by product code. The build's durable bookkeeping goes to `construction/ledger/`, which is committed and shared by every agent that touches the project — a workspace is never its home.
 9. **One owning step per symbol and per file.** Every Appendix-B.8 symbol appears in **exactly one** step's `Creates:`, and **every file in §0.5 has an owning step** — with no exceptions, because a file nobody owns is either unbuilt or deferred, and **a deferred item has no file at all** (§0.2, `Logic.md` §2.1 rule 5). A symbol **used by an earlier step than its `Creates:` owner** is a `CONTRACT-GAP`, not a sequencing detail.
 10. **`<Cross-cutting contracts that must never be silently softened>`** — list the handful of correctness properties from Logic.md that, if violated anywhere, are always a regression regardless of which step touched the code (e.g. the single-writer discipline, the cooperative-cancellation contract, the one-directional promotion rule) — naming them here means a reviewer doesn't have to re-derive "is this actually load-bearing" from scratch every time.
 11. **Nothing is read before something fills it.** Every singleton, registry and config-fed structure a step consumes appears in an **earlier** step's `Populates:` (§0.4, rail 7). A step that needs a value with no populating step HALTs; it never supplies the value itself, and a test that injects the value by hand is not a resolution — it is the mechanism by which this defect reaches production undetected.
@@ -536,7 +546,7 @@ values for any field the entry step doesn't itself own>
 
 ## Appendix R2 — Stub contract catalog (NORMATIVE)
 
-**Scaffold-first:** every module below is born as a stub at the scaffold step — it honours its frozen B.8 signature, returns the exact canned value here, logs `STUB:<name>`, and is tracked in `/misc/stub_registry.md`. A later step **fills** it; replacing a stub changes **no signature**.
+**Scaffold-first:** every module below is born as a stub at the scaffold step — it honours its frozen B.8 signature, returns the exact canned value here, logs `STUB:<name>`, and is tracked in `construction/ledger/stub_registry.md`. A later step **fills** it; replacing a stub changes **no signature**.
 
 | Stub (symbol) | Frozen signature | Canned return / behaviour | Filled by |
 |---|---|---|---|
@@ -561,9 +571,9 @@ values for any field the entry step doesn't itself own>
 
 ### R3.2 Chapter level — the human walk (this is the real gate)
 
-`acceptance/CHAPTER_<n>_ACCEPTANCE.md`, Architect-authored **while the chapter is being authored** (not after the code exists — a checklist written afterwards documents what was built instead of stating what was wanted).
+`construction/acceptance/CHAPTER_<n>_ACCEPTANCE.md`, Architect-authored **while the chapter is being authored** (not after the code exists — a checklist written afterwards documents what was built instead of stating what was wanted).
 
-> **It has an owning step, and that is new in Mk II.** Mk I mandated this file and gave it no owner — so it was a structure the standard required and no step created, which is precisely the defect class **rail 7** exists to forbid. The standard was committing it. From Mk II the chapter's **first** step carries `acceptance/CHAPTER_<n>_ACCEPTANCE.md` in its `Creates:` line, exactly like any other structure. A chapter whose first step does not name it is not authored yet.
+> **It has an owning step, and that is new in Mk II.** Mk I mandated this file and gave it no owner — so it was a structure the standard required and no step created, which is precisely the defect class **rail 7** exists to forbid. The standard was committing it. From Mk II the chapter's **first** step carries `construction/acceptance/CHAPTER_<n>_ACCEPTANCE.md` in its `Creates:` line, exactly like any other structure. A chapter whose first step does not name it is not authored yet.
 
 | Field | Rule |
 |---|---|
@@ -578,7 +588,7 @@ values for any field the entry step doesn't itself own>
 
 ### R3.3 The chapter evidence artifact — one file, three jobs
 
-Exactly **one** per chapter, `acceptance/evidence_chapter_<n>.*`, created by the chapter's **last** step and named in that step's `Creates:` line. It replaces Mk I's split pair (an optional smoke script plus, at Pattern III, a separate probe): same proofs, one write event.
+Exactly **one** per chapter, `construction/acceptance/evidence_chapter_<n>.*`, created by the chapter's **last** step and named in that step's `Creates:` line. It replaces Mk I's split pair (an optional smoke script plus, at Pattern III, a separate probe): same proofs, one write event.
 
 **Its three jobs, all of which the human walk cannot do:**
 

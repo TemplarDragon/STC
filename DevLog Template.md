@@ -2,7 +2,7 @@
 
 > **[STC template — delete this callout before use.]** The Builder's own notebook. Every other document in this project is **read-only law** for the Builder (`Railroad.md` §0); this is the one file it writes freely. Keep it short, append-only, and honest — including about what went wrong.
 
-**Lives here:** in the **built project's** repository, at `manuals/DevLog.md` — *not* in the design workspace. Its entire job is continuity across sessions and machines, so it has to travel in the same repository as the code it describes. If the design documents live in a separate repo, this file does not follow them there.
+**Lives here:** in the **built project's** repository, at `codex/DevLog.md` — *not* in the design workspace. Its entire job is continuity across sessions and machines, so it has to travel in the same repository as the code it describes. If the design documents live in a separate repo, this file does not follow them there.
 
 **Written by:** the Builder, every session, without being asked. **Read by:** the next session (whoever or whatever it is), and the Architect. **Never** cited as a reason for anything.
 
@@ -78,7 +78,7 @@ These are not stylistic. A journal that accumulates authority is worse than no j
 
 **When a chapter is accepted, that chapter's session entries are compacted into one short retrospective and the detail is deleted.** Three or four lines: what the chapter cost more than expected, what broke twice, which gaps it raised, which machine notes turned out to be permanent. The open queue, the machine notes and the gap index survive compaction; the session narrative does not.
 
-This is the same discipline as emptying `directorium_temporarium/` at a gate (`Logic.md` §2.4), and for the same reason: an artifact that only grows will eventually be loaded by someone, and then it is context nobody budgeted for. **If something in a session entry deserves to survive compaction, it deserves to be promoted into a document that binds** — a machine note, a step, or an amendment. Anything else was a diary, and a closed chapter's diary has done its job.
+This is the same discipline as emptying `construction/<XX>_workspace/` at a gate (`Logic.md` §2.4), and for the same reason: an artifact that only grows will eventually be loaded by someone, and then it is context nobody budgeted for. **If something in a session entry deserves to survive compaction, it deserves to be promoted into a document that binds** — a machine note, a step, or an amendment. Anything else was a diary, and a closed chapter's diary has done its job.
 
 ### Chapter retrospectives
 

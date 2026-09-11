@@ -26,18 +26,18 @@
 | §3 the structure sketch | §2.1, as **input only**. It may be replaced entirely; where it is, say so in one line, because the owner drew it for a reason and deserves to know the reason failed |
 | §4's walkthroughs | §3.3 (per module) and §8.5 (the end-to-end flow); the owner's branches become the decisions, and their reasoning becomes the *why* |
 | §4's "in case of failure or error" | §9.3's failure matrix, and §3.3's failure behaviour |
-| the figures written into §4's steps ("how many, how often, how big") | Appendix C (as pinned values) — and the absence of a figure is a **question to ask**, never a number to invent. The specification has no separate field for these; they arrive inside the step that carries them, so read the walkthroughs for numbers rather than expecting a list |
+| the figures written into §4's steps ("how many arrive, how often, how big") | Appendix C (as pinned values) — and the absence of a figure is a **question to ask**, never a number to invent. The specification has no separate field for these; they arrive inside the step that carries them, so read the walkthroughs for numbers rather than expecting a list |
 | §5's `F#` items | §3.2/§3.3, and each one keeps its `F#` so it stays traceable. Each item names the §4 walkthrough that delivers it, which is the owner's own coverage check — an item marked as a property rather than a sequence is the one legitimate exception |
 | §6.1 (must never) | §3.5 (rules the system must never break) |
 | §6.2 (not in this version) | §13 (Deferred) |
 | §6.3 (imposed anyway) | §0 TARGET ENVIRONMENT and Appendix C — **flagged as choices**: each one may be challenged here with a cost attached, and the owner decides. This is the one list in the specification allowed to name a technology, a machine or a place, so it is also the only place a toolchain preference can legitimately have arrived from |
-| §7's questions | **the profile in §0.1** — "should it run by itself" seeds P6b/P7, "what starts it / who receives" seeds P1a/P1b, "what information" seeds P10, "what do you prefer on failure" seeds §9, and a judged "expected result" in §5 seeds P11 |
+| §7's questions | **the profile in §0.1** — "should it run by itself" seeds P6b/P7, "what starts it" and "who or what receives the result" seed P1a/P1b, "what information does it touch" seeds P10, "when something fails, what do you prefer" seeds §9, and a judged "expected result" in §5 seeds P11 |
 | §7's "where will it end up running" | §0 TARGET ENVIRONMENT — **as terrain, not as a choice**. The distinction is load-bearing: a §6.3 constraint may be revisited with a price attached, terrain may only be designed around. Keep the two apart here too, so a later reader can tell which assumptions are negotiable |
-| §7's "where will it be built" | `manuals/DevLog.md`'s machine-notes table, seeded on day one rather than discovered in the third session — and §0's one re-litigated decision about the environment, if the build machine and the target differ |
+| §7's "where will it be built" | `codex/DevLog.md`'s machine-notes table, seeded on day one rather than discovered in the third session — and §0's one re-litigated decision about the environment, if the build machine and the target differ |
 | §9 open questions | either resolved here as a decision with its reasoning, or carried into §13 — never left open in both documents |
 | §11 (further development plans) | **nowhere structural.** Record it in §0 as known direction and treat it as non-normative: it may break a tie between two otherwise-equal designs by picking the one that does not foreclose it, and it may **never** be cited as the reason an abstraction, a flag, an extension point or a spare layer exists today. It is not deferred work, so it does not belong in §13 either — nobody asked for it. A line there that named a specific engine was a choice in disguise and belongs in §6.3 |
 
-**THE BUILDER'S NOTEBOOK (`manuals/DevLog.md`):** the Builder keeps an append-only journal of what it did, what broke, and what state it left the tree in — the one file it may write. **It is never law and never a decision.** If something in it turns out to matter, it is promoted into *this* document as an amendment, or into `Railroad.md` as a step, and only then does it bind anything. A missing decision is still a `CONTRACT-GAP`, never a log entry.
+**THE BUILDER'S NOTEBOOK (`codex/DevLog.md`):** the Builder keeps an append-only journal of what it did, what broke, and what state it left the tree in — the one file it may write. **It is never law and never a decision.** If something in it turns out to matter, it is promoted into *this* document as an amendment, or into `Railroad.md` as a step, and only then does it bind anything. A missing decision is still a `CONTRACT-GAP`, never a log entry.
 
 **COMPANION ARTIFACT (`Railroad.md`):** Once this logic is "locked", `Railroad.md` sequences component creation in dependency order, using the contract/ownership map in Appendix B as the single source of truth. **The division is strict: this file answers WHY and WHAT; the railroad answers WHAT TO GENERATE, step by step.** This file therefore carries the reasoning, the file architecture (§2.1) and the module-by-module application logic (§3) — and never a line of implementation code. The railroad carries ordered steps and verbatim signatures — and never a decision. A logic document that has started to read like a prompt for a code generator has failed; so has a railroad that decides anything.
 
@@ -207,14 +207,20 @@ Built against STC:  Mk <…> Mod <…> A<…>
 ├─ <utils>/                    # leaf helpers: imported by everything, imports nothing project-local
 ├─ <artifacts>/                # what it reads/writes: CSV/, out/, reports/ — omit if it writes none
 ├─ logs/                       # runtime logs
-├─ manuals/                    # operator documentation [optional], plus:
+├─ misc/                       # the PRODUCT's own miscellany — belongs to the program, not to the build
+│
+├─ codex/                      # operator documentation [optional], plus:
 │   └─ DevLog.md               # the BUILDER's append-only journal — never law, never a decision
-├─ misc/                       # operational artifacts, miscellaneous files: registries, gate records — never documentation
-├─ acceptance/                 # CHAPTER-grained verification — max 2 files per chapter, ever (Railroad R3)
-│   ├─ CHAPTER_<n>_ACCEPTANCE.md  # Architect-authored human checklist; created by the chapter's FIRST step (R3.2)
-│   └─ evidence_chapter_<n>.*     # the chapter's ONE executable artifact; Builder-authored at its LAST step (R3.3)
-└─ directorium_temporarium/    # THE ONLY throwaway directory — see §2.4. EMPTIED at every chapter gate,
-                               #   which is why no verification artifact may ever live in here
+└─ construction/               # everything that exists ONLY because of the build process — see §2.4.
+    │                          #   With codex/ these are the root's only two process entries; every
+    │                          #   directory above them belongs to the program being built.
+    ├─ ledger/                 # the build's OWN bookkeeping, committed: stub_registry.md + gate records
+    ├─ acceptance/             # CHAPTER-grained verification — max 2 files per chapter, ever (Railroad R3)
+    │   ├─ CHAPTER_<n>_ACCEPTANCE.md  # Architect-authored human checklist; created by the chapter's FIRST step (R3.2)
+    │   └─ evidence_chapter_<n>.*     # the chapter's ONE executable artifact; Builder-authored at its LAST step (R3.3)
+    └─ <XX>_workspace/         # THE ONLY throwaway directory, ONE PER AGENT (CC_, CX_, …) — see §2.4.
+                               #   Gitignored and EMPTIED at every chapter gate, which is why no
+                               #   verification artifact may ever live in here
 
 ```
 
@@ -252,13 +258,23 @@ Built against STC:  Mk <…> Mod <…> A<…>
 |---|---|---|---|
 | `<path>` | `<one sentence>` | `<what only this module may touch>` | `<modules it imports>` |
 
-### 2.4 The directorium_temporarium directory — one bin, emptied between chapters
+### 2.4 The construction directory — the machinery in one place, one bin per agent
 
-Anything produced **while building** that is not part of the delivered program lives in **`directorium_temporarium/`** and nowhere else: throwaway probes, spikes into a risky unknown, one-off scripts, sample payloads, scratch notes, temporary output, an experimental script written to answer one question.
+Everything that exists **only because this project is being built** lives under **`construction/`** and nowhere else. The reason is legibility rather than tidiness: a root scattered with process directories leaves a reader unable to tell which folders are the program and which are the scaffolding around it. With `codex/`, `construction/` is one of exactly two process entries in the root; everything else there belongs to the delivered program.
 
-- **One directory. The project root stays clean.** No `spikes/`, no `tmp/`, no stray `test_something.py` beside the entry point.
-- **Gitignored in full.** Nothing in it is ever imported by product code — an import from `directorium_temporarium/` is a defect, not a shortcut.
-- **Emptied at every chapter gate** (`Railroad.md` §0.3). If something in it turned out to matter, it is promoted into the tree above by a step that owns it — with a name, a home and a purpose — *before* the bin is emptied. Anything still sitting in `directorium_temporarium/` at a gate is by definition disposable.
+Three subdirectories, three different lifetimes — and each has **one** lifetime rule, which is what keeps the rules enforceable:
+
+- **`construction/ledger/` — the build's own bookkeeping. Committed.** `stub_registry.md` and the gate records. This is how a later session, on another machine or with a different agent, knows what is still a stub and which gates were signed. It describes the state of the **project**, so it may never be filed inside one agent's workspace.
+- **`construction/acceptance/` — the verification artifacts. Committed.** Two files per chapter and no more (`Railroad.md` R3).
+- **`construction/<XX>_workspace/` — the throwaway bin. Gitignored, one per agent.** `CC_workspace/`, `CX_workspace/`, one per agent that works on this project, so two of them never collide in a scratch area. It holds throwaway probes, spikes into a risky unknown, one-off scripts, sample payloads, scratch notes, temporary output, an experimental script written to answer one question.
+
+The bin's three rules are what make it safe, and none of them changed when it moved:
+
+- **One bin per agent, and nothing outside it.** No `spikes/`, no `tmp/`, no stray `test_something.py` beside the entry point.
+- **Gitignored in full.** Nothing in it is ever imported by product code — an import from a workspace is a defect, not a shortcut.
+- **Emptied at every chapter gate** (`Railroad.md` §0.3). If something in it turned out to matter, it is promoted into the tree above by a step that owns it — with a name, a home and a purpose — *before* the bin is emptied. Anything still sitting in a workspace at a gate is by definition disposable.
+
+**`misc/` is the product's, not the build's.** It is the delivered program's own place for odds and ends; nothing about the build process is ever filed there.
 
 ### 2.5 Import direction (the rule that keeps modules modular)
 
