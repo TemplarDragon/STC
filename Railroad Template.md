@@ -194,11 +194,13 @@ On gap:          HALT + emit "CONTRACT-GAP: <precise description>" (ACCEPTANCE-D
 <project root>/                  # = the BUILT PROJECT, on the target machine/repo; this doc workspace is DESIGN-ONLY
 ├─ <entrypoint>                  # ROOT EXECUTABLE — running it starts/does the thing (§2.2 of Logic.md)
 │                                #   more than one only if §2 names more than one; each needs its own reason
-├─ config/                       # the ONE config surface
-│   ├─ enums.*                   # B.1 enums — single home
-│   ├─ types.*                   # B.8.0 DTOs / shared types
+├─ config/                       # the ONE config surface — EXACTLY these four (Logic.md §2.8). A fifth
+│   │                            #   file here is a CONTRACT-GAP, never a new file
 │   ├─ config.*                  # config model + load_config() (B.8.1); validates Appendix-C keys, fail-fast
-│   └─ *.<ext>                   # operator-owned data files (policies, presets, lookup tables)
+│   ├─ id_config.*               # identifiers the operator maintains: channels, users, resources
+│   ├─ .env                      # secret VALUES → the process environment  [gitignored]. The program reads
+│   │                            #   the environment, NEVER this file (Logic.md §2.8)
+│   └─ .env.example              # the same names, empty values — committed, so the secret set is knowable
 │
 ├─ <domain>/                     # WHAT THIS PROJECT ACTUALLY DOES — one package per coherent responsibility.
 │                                #   Name them after the work (parsing/, pricing/, sync/), never after a layer
@@ -208,6 +210,7 @@ On gap:          HALT + emit "CONTRACT-GAP: <precise description>" (ACCEPTANCE-D
 ├─ <utils>/                      # DEPENDENCY-FREE leaf utilities: imported by everything, imports nothing local
 │
 ├─ <artifacts>/                  # whatever this program reads/writes: CSV/, out/, reports/ — omit if it writes none
+├─ prompt_library/               # every prompt this project tunes (Logic.md §2.9)  **[PROFILE P13]**
 ├─ logs/                         # runtime logs — [gitignored]
 ├─ misc/                         # the PRODUCT's own miscellany — belongs to the program, not to the build
 │
@@ -268,7 +271,7 @@ That baseline is a **complete, valid STC tree**. A single-purpose CLI tool or ba
 
 > [STC: `<domain>`, `<commands>`, `<utils>`, `<artifacts>` and every `<bracketed>` package above are placeholder names — replace them with names drawn from **your** problem domain. Keep the *roles* distinct rather than the *names*: the work, the operator verbs, the dependency-free leaf, the data. A small project legitimately collapses several into one package; don't invent a package that has nothing to own. **The reverse error is the expensive one:** a `<core_subsystems>/` with a single stage in it, or a `<data_layer>/` facade over one CSV file, is indirection that every future step must route through for no benefit.]
 
-> **What counts as "the §0.5 set" for scaffold conformance:** the paths enumerated above, plus `__init__`/index files created by rule at scaffold time, plus root tooling config (`.gitignore`; a test-runner config **only if** a chapter evidence artifact actually needs one). **Excluded from any ownership walk:** VCS metadata, build caches, the *contents* of `storage/**` and `logs/**` (the directories must exist; what accumulates inside is runtime data, gitignored), and the *contents* of `construction/<XX>_workspace/` (disposable by definition — see `Logic.md` §2.4).
+> **What counts as "the §0.5 set" for scaffold conformance:** the paths enumerated above, plus `__init__`/index files created by rule at scaffold time, plus root tooling config (`.gitignore`; a test-runner config **only if** a chapter evidence artifact actually needs one). **Excluded from any ownership walk:** VCS metadata, build caches, the *contents* of `storage/**` and `logs/**` (the directories must exist; what accumulates inside is runtime data, gitignored), the *contents* of `construction/<XX>_workspace/` (disposable by definition — see `Logic.md` §2.4), and **`config/.env` itself**, which is gitignored and created locally from `config/.env.example`: a clone that has not been set up yet is missing it, and that is setup state, not a tree defect. `config/.env.example` **is** in the set and its absence is a defect — it is the only committed record of which secrets this project needs (`Logic.md` §2.8).
 >
 > **Note the absence of a `tests/` tree — it is deliberate, and it follows from §0's cap rather than from a dislike of the directory.** Verification is chapter-grained: `construction/acceptance/` gains **one checklist per chapter**, written by the Architect at chapter-authoring time, and **one evidence artifact per chapter** beside it, written by the Builder at the chapter's last step (R3.3). Two files per chapter is the whole budget, so there is nothing for a `tests/` tree to hold. Hence also: no per-step test file, no per-step evidence file, no shared fixtures module, no mock library — each of those is either a third file in a chapter (clause 3) or an executable check below the gate (clause 1).
 
@@ -412,7 +415,8 @@ MUST NOT:        implement any real business logic here — stubs only, except t
                  its LAST step (R3.2/R3.3). Neither exists yet at scaffold.
 Verify:          - V1: run the entry point -> it starts and answers on the loopback path without error
                  - V2: the run's log contains a STUB:<name> line for each stub the path crossed
-                 - V3: `construction/acceptance/` exists and is empty; `construction/<XX>_workspace/` exists and is gitignored
+                 - V3: `construction/acceptance/` exists and is empty; `construction/<XX>_workspace/` exists
+                       and is gitignored; `config/.env.example` exists and `config/.env` is gitignored
                  - V4: the tree on disk matches Logic.md §2.1 exactly — no extra file, no missing one
 Definition of done: full §0.5 tree exists; every stub logs STUB:<name> and is in construction/ledger/stub_registry.md; V1-V4
                  observed and printed.
@@ -633,7 +637,7 @@ graph LR
 
 ## Appendix R5 — Directory & file architecture → see §0.5
 
-`<Retained only as a stable anchor for cross-references; §0.5 is authoritative.>`
+`<Retained only as a stable anchor for cross-references. The authoritative file architecture is `Logic.md` §2.1; §0.5 is that same tree seen from the build side, and states the precedence rule itself.>`
 
 -----
 
@@ -717,6 +721,7 @@ These are ordered by how often they survive review. **A class is not retired by 
 - **Provisioning chain.** Every `Reads populated:` entry resolves to an earlier `Populates:` (invariant 11).
 - **Key liveness.** Every Appendix C key has a named reader; every reader's key exists; no key toggles something the document calls an invariant.
 - **Freeze hygiene.** No identifier in the prose is absent from Appendix B/C; no `Railroad` step names a path absent from `Logic.md` §2.1.
+- **Tree agreement.** The **set of paths** in `Logic.md` §2.1 and in §0.5 is the same set — *diff* them, do not read them. This is a literal diff **in a filled project**, where every `<placeholder>` has been resolved on both sides; comparing two unfilled templates only compares their placeholder spellings and proves nothing. The annotations differ by design; a path in one and not the other is a `CONTRACT-GAP`, and §2.1 wins. This check exists because the tree is written twice, and two copies with no mechanical comparison drift in the direction nobody is looking.
 
 ### R8.4 Disposition — every finding and every comment gets one, in writing
 

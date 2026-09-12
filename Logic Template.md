@@ -37,7 +37,7 @@
 | §9 open questions | either resolved here as a decision with its reasoning, or carried into §13 — never left open in both documents |
 | §11 (further development plans) | **nowhere structural.** Record it in §0 as known direction and treat it as non-normative: it may break a tie between two otherwise-equal designs by picking the one that does not foreclose it, and it may **never** be cited as the reason an abstraction, a flag, an extension point or a spare layer exists today. It is not deferred work, so it does not belong in §13 either — nobody asked for it. A line there that named a specific engine was a choice in disguise and belongs in §6.3 |
 
-**THE BUILDER'S NOTEBOOK (`codex/DevLog.md`):** the Builder keeps an append-only journal of what it did, what broke, and what state it left the tree in — the one file it may write. **It is never law and never a decision.** If something in it turns out to matter, it is promoted into *this* document as an amendment, or into `Railroad.md` as a step, and only then does it bind anything. A missing decision is still a `CONTRACT-GAP`, never a log entry.
+**THE BUILDER'S NOTEBOOK (`codex/DevLog.md`):** the Builder keeps an append-only journal of what it did, what broke, and what state it left the tree in — **the one document it may write.** It writes plenty else: product code, its stub entries in `construction/ledger/`, and the chapter's single evidence artifact at that chapter's last step (`Railroad.md` R3.3). What it may never write is a document that **binds** — this file and `Railroad.md` are read-only law. **It is never law and never a decision.** If something in it turns out to matter, it is promoted into *this* document as an amendment, or into `Railroad.md` as a step, and only then does it bind anything. A missing decision is still a `CONTRACT-GAP`, never a log entry.
 
 **COMPANION ARTIFACT (`Railroad.md`):** Once this logic is "locked", `Railroad.md` sequences component creation in dependency order, using the contract/ownership map in Appendix B as the single source of truth. **The division is strict: this file answers WHY and WHAT; the railroad answers WHAT TO GENERATE, step by step.** This file therefore carries the reasoning, the file architecture (§2.1) and the module-by-module application logic (§3) — and never a line of implementation code. The railroad carries ordered steps and verbatim signatures — and never a decision. A logic document that has started to read like a prompt for a code generator has failed; so has a railroad that decides anything.
 
@@ -108,6 +108,7 @@ Answer each row. **The default answer is NO.** Answer YES only when the capabili
 | P10 | handle **secrets, personal data, or a real trust boundary** (untrusted input, multi-user access)? | `<NO>` | shrink §12 to a one-paragraph statement of what it deliberately does not protect |
 | P11 | have a component whose **correctness cannot be asserted exactly** — where "right" is established against thresholds, held-out cases or a human's judgement, rather than compared to an expected value? | `<NO>` | §3.6 |
 | P12 | stand on a **framework, engine or protocol whose conventions will be visible in this project's structure** (an orchestration framework, an ORM, a web framework, a spec you implement)? A leaf library you merely call — a date parser, a CSV reader — is NOT this. | `<NO>` | §2.7 |
+| P13 | run its behaviour on **prompts this project authors and tunes** — a language model given instructions you write, revise and version? Calling a model with a fixed one-line query you never revisit is NOT this. | `<NO>` | §2.9 (whole), `prompt_library/`, and any Appendix C key whose only job is to select a prompt |
 
 > **P11 asks about the shape of your correctness, not about your technology stack.** A model call, a heuristic scorer, a physical sensor, a fuzzy matcher and an optimiser all land here for the same reason: *"assert result == expected"* is not available, so the project owes a written account of how "good enough" is decided. Conversely, a system built entirely out of model calls whose outputs are checked against exact expected values does **not** need this row. Phrasing it structurally is deliberate: the moment a profile row names a technology, the standard starts carrying one kind of project's identity, and every future project inherits it.
 
@@ -160,7 +161,7 @@ Built against STC:  Mk <…> Mod <…> A<…>
 [STC: three rules that keep the profile honest.
 (1) **Structure follows the profile, not the template.** If P2 is NO there is no data layer — not an empty one, not a "future-proof abstraction over storage". Build the thing that exists.
 (2) **A NO is reversible, and reversing it is a Mod bump** (see VERSION LABELING) — that is the correct, recorded way to grow a capability later, and it is cheaper than carrying a scaffold nobody uses.
-(3) **Do not import shape from a reference project.** If you looked at an existing system while authoring — a sibling project, a public repo, a curated knowledge base — you may take *techniques*; you may not take *its section list*. Its profile is its own, and a mature reference system is almost always the maximal case: everything in it was necessary **there**, which is exactly why none of it arrives here carrying "necessary" as a property. Answering these twelve questions from *your* project's requirements is what stops the last system you read from silently becoming the architecture of the next one.]
+(3) **Do not import shape from a reference project.** If you looked at an existing system while authoring — a sibling project, a public repo, a curated knowledge base — you may take *techniques*; you may not take *its section list*. Its profile is its own, and a mature reference system is almost always the maximal case: everything in it was necessary **there**, which is exactly why none of it arrives here carrying "necessary" as a property. Answering these thirteen questions from *your* project's requirements is what stops the last system you read from silently becoming the architecture of the next one.]
 
 -----
 
@@ -197,15 +198,18 @@ Built against STC:  Mk <…> Mod <…> A<…>
 ```text
 <project root>/
 ├─ <entrypoint>.<ext>          # the executable — what running it does
-├─ config/                     # THE one config surface
-│   ├─ config.<ext>            # settings: limits, paths, feature switches
-│   ├─ keys.<ext>              # secrets, loaded from the environment — never committed
-│   └─ <data>.yaml             # operator-owned tables: ids, presets, policies, registries
+├─ config/                     # THE one config surface — EXACTLY these four files, see §2.8.
+│   │                          #   A fifth file here is a CONTRACT-GAP, never a new file
+│   ├─ config.<ext>            # flags, switches, limits, paths to places OUTSIDE the project
+│   ├─ id_config.<ext>         # identifiers the operator maintains: channels, users, resources
+│   ├─ .env                    # secret VALUES → the process environment  [gitignored]
+│   └─ .env.example            # the same names, empty values — committed, so the set is knowable
 ├─ <domain>/                   # what this project ACTUALLY DOES — named after the work
 │   └─ <module>.<ext>          # one module per coherent responsibility
 ├─ <commands>/                 # operator-facing verbs, one module each  [+ a registry file if many]
 ├─ <utils>/                    # leaf helpers: imported by everything, imports nothing project-local
 ├─ <artifacts>/                # what it reads/writes: CSV/, out/, reports/ — omit if it writes none
+├─ prompt_library/             # every prompt this project tunes — see §2.9  **[PROFILE P13]**
 ├─ logs/                       # runtime logs
 ├─ misc/                       # the PRODUCT's own miscellany — belongs to the program, not to the build
 │
@@ -326,6 +330,33 @@ graph TD
 **(1) "Declined" needs a replacement, not just a refusal.** *"We don't use its parallel branches"* leaves the Builder with a problem and no address. *"Parallel branches → one node that fans out internally with a task group, because two branches writing the same state clobbered each other's checkpoints"* leaves nothing to decide.
 **(2) The best reasons are scars.** A declined feature justified by an incident you actually had ("this shape caused the history race in `Mod 2 A7`") will survive review; one justified by taste will be quietly re-adopted.
 **(3) Name the features with no consumer, and let them go.** Listing a bundled feature as *declined: nothing in this project consumes it* is the cheapest entry in the table, and it pre-empts the most common "while I was in there" expansion. Adopting *inspiration* while declining the *method* is a legitimate and common outcome — but say it explicitly (`<"our adapter manifests follow <PROTOCOL> in spirit; we do not implement <PROTOCOL>">`), because an unstated resemblance gets read by the next person as a compatibility promise.]
+
+### 2.8 The config surface — four files, and a test for everything else
+
+`config/` holds **exactly four files**, and a fifth is a `CONTRACT-GAP` rather than a new file. The cap is the whole point: a configuration directory that accepts one more file every month stops being a surface and becomes a drawer, and once it is a drawer nobody can say what this program is actually configured by.
+
+| File | Holds | Standing |
+|---|---|---|
+| `config.<ext>` | flags, switches, limits, and paths to places **outside** the project | the program's own settings |
+| `id_config.<ext>` | identifiers the operator maintains — channel, user, resource ids | separate from settings because they change on a different clock and by a different hand |
+| `.env` | secret **values** | **gitignored. Never committed.** |
+| `.env.example` | the same key names with empty values | **committed** — it is how anyone learns *which* secrets exist without learning any of them |
+
+**Secrets reach the program through the environment, never through a file the program reads.** `.env` is a delivery mechanism for local development: a loader (`python-dotenv`, `docker compose env_file`, `systemd EnvironmentFile`) fills the process environment from it, and the program reads the environment. In CI, in a container, or behind a secret manager there is no file at all and **not one line of the program changes**. A secrets module the program *imports* welds the local delivery mechanism into the source, and the day the project has to run somewhere else, that is a code change nobody budgeted. Every secret's **name and type** are declared in Appendix C under `security/secrets`; a value never appears there.
+
+**Which `<ext>` is a real choice, not a formality.** If a non-programmer edits these files, pick a data format (`config.yaml`) over a module (`config.py`): a malformed data file is caught at load with a message, and a malformed module stops the program from booting at all.
+
+**The test for anything else that wants to live here.** If a table is small enough that it does not hurt the readability of the file it sits in, it is a **configuration value** and belongs inside `config.<ext>` or `id_config.<ext>`. If it is big enough to hurt, it is not configuration — it is **data the program consumes**, and it belongs in the tree above (§2.1), owned by a module. There is no third answer, and in particular there is no fifth file.
+
+---
+
+### 2.9 The prompt library **[PROFILE P13 — delete this section, and `prompt_library/` with it, unless P13 = YES]**
+
+A project that runs its behaviour on prompts it authors keeps **every one of them in `prompt_library/`** and nowhere else: the main prompt, per-tool or per-mode instructions, guideline documents the model is handed, worked examples it is shown.
+
+- **One home, because prompts multiply.** A project that starts with a single main prompt has a second one within a chapter — a reflection guideline, a scenario set, a per-tool instruction. A design that houses the first prompt in the config surface has to house the second somewhere else, and then the project has two prompt homes and no rule for telling them apart.
+- **A prompt is content, not configuration.** The program consumes it the way it consumes a template or a lookup table, so it sits in the tree beside the module that loads it — never in `config/` (§2.8).
+- **The step that loads a prompt names the file.** A prompt nothing loads is dead weight; a prompt loaded by a path assembled at runtime from a config key is a structure with no owning step, which rail 7 forbids.
 
 -----
 
@@ -857,6 +888,8 @@ The per-module public interface a coding agent implements **bodies for, without 
 > **Every key needs a consumer, and the consumer needs a name.** The most common defect in a frozen config surface is not a missing key — it is a key that is present, typed, defaulted, referenced by a sentence of prose, and **read by nothing**. It looks like a working feature in every review, and the feature does not exist. So each group here states the **symbol or step that reads it**; a key with no reader is either a gap (build the reader) or dead (retire it), and both are decisions, not oversights. The mirror-image defect is a key that duplicates an invariant — a toggle for something the document says may never be disabled — which is not configuration but an invitation to break the contract; retire it.
 >
 > **What does not belong here:** a constant that is a **fact about one external surface** (its payload cap, its rate ceiling, its message length). That belongs to the adapter that owns the surface (§4.1); its appearance here is a `CONTRACT-GAP`. Keys carry facts about **this** system.
+
+> **Secrets are named here and valued nowhere here.** A secret's key **name** and type belong in the `security/secrets` group like any other key; its **value** lives only in the environment, delivered by `config/.env` in local development and injected by the platform everywhere else (§2.8). A default for a secret is a contradiction in terms — leave it blank and say what happens when it is missing.
 
 `<Group keys by the section of this document they belong to — modes, performance, persistence, security/secrets, integrations, etc. One line per group, keys comma-separated, types and defaults inline. This reads dense but is meant to be grep'd, not prose-read.>`
 

@@ -34,6 +34,8 @@ Target runtime: `<e.g. "Node 22 LTS" / "Python 3.14 standard" / "Go 1.23">`. `<S
 
 ## 4. Resolution status (package set) — `<YYYY-MM-DD>`, `<runtime + version>`
 
+> **[STC: re-date this section every time the pinned set changes.** A resolution note that outlives the set it describes is worse than no note, because it reads as a verification somebody performed on today's manifest when in fact it was performed on a different one. The date and the runtime **are** the claim; if either moved, the claim has to be made again.**]**
+
 `<Record HOW the set was resolved (lockfile tool + command) and confirm it installs clean on the target runtime with no compiler / no native build step, if that's a goal. Note any package that had no compatible prebuilt artifact and what replaced it, with the reason — this is exactly the kind of decision that gets silently re-made differently by someone else later if it isn't written down once, here.>`
 
 **Packages with no compatible prebuilt artifact → intentionally replaced:**
@@ -51,6 +53,7 @@ consistency-check command if your package manager supports one>
 
 ## Rules
 
+- **When this list is written: while authoring, before the freeze.** The natural moment is between `Logic.md` closing and `Railroad.md` being written — whoever plans the build walks the dependency graph and can already see what each chapter will need. **Step 0.0 then resolves and pins what authoring listed.** After that step, adding anything here or to `requirements.<ext>` is a `CONTRACT-GAP` and an amendment, never a step's own decision (rail 3).
 - **`requirements.<ext>`** = the pinned package-manager set (versions resolved, not invented).
 - **This file** = the non-package-manager sources (tools / git / runtimes / artifacts).
 - `<If this project shares its dependency set with sibling projects, say so and name the coordination rule — e.g. "adding a dependency here is coordinated across siblings; an uncoordinated addition is a CONTRACT-GAP against Railroad.md §0.">`
