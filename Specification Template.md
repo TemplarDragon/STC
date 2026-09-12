@@ -8,7 +8,7 @@
 
 **The one boundary that keeps this document useful:** no file names, no function names, no configuration flags, no library or engine names anywhere except **§6.3**. The test is simple — *could someone read this without opening the repository?* If not, you have crossed into `Logic.md`'s territory, and the agent should send you back.
 
-**What happens to this file.** You write a first version, then talk it through in as many rounds as it takes. When **you** are satisfied that it describes the thing you actually want, work moves to `Logic.md`, where every technical decision is made. **From that day this file is frozen, moved to `ARCH/`, and never consulted for building again.** Its one remaining job is to answer *"how far has this drifted from what I originally asked for?"* — and it can only answer that if nobody tidied it up afterwards.
+**What happens to this file.** You write a first version, then talk it through in as many rounds as it takes. When **you** are satisfied that it describes the thing you actually want, work moves to `Logic.md`, where every technical decision is made. **From that day this file is frozen where it is — it stays in `codex/`, is never edited again, and is never consulted for building.** Its one remaining job is to answer *"how far has this drifted from what I originally asked for?"* — and it can only answer that if nobody tidied it up afterwards.
 
 ---
 
@@ -175,4 +175,4 @@ Not a formality — passing this list is what makes the technical document writa
 
 **When those hold, `Logic.md` opens** — and every further refinement of the business logic happens *there*, including the parts you have not thought about yet. This file stops being edited the same day, without exception: it is now the record of what you originally asked for, and that record is worth exactly as much as its resistance to being tidied up later.
 
-`Specification frozen: <date> · moved to ARCH/ · Logic.md Mk <N> Mod <M> A<K> opened from it`
+`Specification frozen: <date> · kept at codex/Specification.md · Logic.md Mk <N> Mod <M> A<K> opened from it · not edited after this line was written`

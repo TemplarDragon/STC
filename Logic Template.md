@@ -14,7 +14,7 @@
 
 **WHY NO CODE HERE:** [STC: keep this rationale or replace with your own — the point is that bundling implementation into the logic doc lets a coding agent (or a rushed contributor) copy a half-thought-out algorithm instead of building against a frozen contract. This file freezes **interfaces and invariants**, not algorithms.]
 
-**WHERE THIS CAME FROM (`Specification.md`, now in `ARCH/`):** this document was opened from an owner-authored specification — a plain-language description of what was wanted, with a numbered feature list. **That file is frozen and is not a source of truth here.** Two consequences worth stating so nobody has to guess later. First, **every `F#` from it is either honoured somewhere in §3, or named in §13 as deferred, or recorded below as dropped with a reason** — a feature that quietly vanished between the two documents is the one failure this handover has, and this line is what prevents it. Second, all further refinement of the business logic happens **here**, including the parts the owner had not thought about; going back to edit the specification would destroy its only remaining value, which is being an unedited record of the original ask.
+**WHERE THIS CAME FROM (`codex/Specification.md`, frozen in place):** this document was opened from an owner-authored specification — a plain-language description of what was wanted, with a numbered feature list. **That file is frozen and is not a source of truth here.** Two consequences worth stating so nobody has to guess later. First, **every `F#` from it is either honoured somewhere in §3, or named in §13 as deferred, or recorded below as dropped with a reason** — a feature that quietly vanished between the two documents is the one failure this handover has, and this line is what prevents it. Second, all further refinement of the business logic happens **here**, including the parts the owner had not thought about; going back to edit the specification would destroy its only remaining value, which is being an unedited record of the original ask.
 
 `<Dropped or reinterpreted features: F#, what changed, and why — the owner agreed to each of these.>`
 
@@ -213,8 +213,17 @@ Built against STC:  Mk <…> Mod <…> A<…>
 ├─ logs/                       # runtime logs
 ├─ misc/                       # the PRODUCT's own miscellany — belongs to the program, not to the build
 │
-├─ codex/                      # operator documentation [optional], plus:
-│   └─ DevLog.md               # the BUILDER's append-only journal — never law, never a decision
+├─ codex/                      # THIS PROJECT'S OWN DOCUMENTS — see §2.10. They live here, in the
+│   │                          #   repository, not in a workspace somewhere else
+│   ├─ Logic Mk <N> Mod <M> A<K>.md  # THE LAW — this document. Read-only for the Builder
+│   ├─ Railroad.md             # the build order — steps, frozen signatures, acceptance criteria
+│   ├─ Specification.md        # the owner's original ask. FROZEN in place: never edited again,
+│   │                          #   never built from (Railroad §0 reading order)
+│   ├─ dependency.md           # everything outside the package manager
+│   ├─ requirements.<ext>      # the pinned package-manager manifest
+│   ├─ DevLog.md               # the BUILDER's append-only journal — never law, never a decision
+│   ├─ ARCH/                   # superseded versions — never edited, never deleted
+│   └─ <operator documentation>     # [optional] manuals for whoever runs the thing
 └─ construction/               # everything that exists ONLY because of the build process — see §2.4.
     │                          #   With codex/ these are the root's only two process entries; every
     │                          #   directory above them belongs to the program being built.
@@ -357,6 +366,28 @@ A project that runs its behaviour on prompts it authors keeps **every one of the
 - **One home, because prompts multiply.** A project that starts with a single main prompt has a second one within a chapter — a reflection guideline, a scenario set, a per-tool instruction. A design that houses the first prompt in the config surface has to house the second somewhere else, and then the project has two prompt homes and no rule for telling them apart.
 - **A prompt is content, not configuration.** The program consumes it the way it consumes a template or a lookup table, so it sits in the tree beside the module that loads it — never in `config/` (§2.8).
 - **The step that loads a prompt names the file.** A prompt nothing loads is dead weight; a prompt loaded by a path assembled at runtime from a config key is a structure with no owning step, which rail 7 forbids.
+
+### 2.10 The codex — this project's own documents, in the repository they describe
+
+Every document this project is built from lives in **`codex/`**, inside this repository.
+
+| File | What it is | Who writes it |
+|---|---|---|
+| `Logic Mk <N> Mod <M> A<K>.md` | **the law** — this document | the Architect, with the owner |
+| `Railroad.md` | the build order | the Architect |
+| `Specification.md` | the owner's original ask, **frozen** | the owner, before the law |
+| `dependency.md` | sources outside the package manager | the Architect, at Step 0.0 |
+| `requirements.<ext>` | the pinned package-manager manifest | the Architect, at Step 0.0 |
+| `DevLog.md` | the Builder's journal | the Builder, every session |
+| `ARCH/` | superseded versions of any of the above | whoever supersedes one |
+
+**Why here and not somewhere else.** A project whose law lives in another directory — or another repository — can be cloned without the reason it is shaped the way it is, and its code then has to be read as though it had no intent. That is the exact condition this standard exists to prevent, so the documents sit beside the code they govern. It costs one directory and buys a repository that explains itself.
+
+**`Specification.md` is frozen in place.** It is not moved out of sight when this document opens: it stays here, unedited, carrying its own freeze stamp (`Specification Template.md` §12). Two rules keep it honest. It is **never edited again**, because its only remaining value is being an unaltered record of what was originally asked for. And it is **never loaded by a Builder** (`Railroad.md` §0 reading order), because this document superseded it the day it opened. Its one live job is to answer *"how far have we drifted from what was asked for?"* — and a file nobody can find cannot answer that.
+
+**`ARCH/` is append-only.** A superseded version moves there instead of being deleted, so a revision history is never reconstructed from memory. Nothing in `ARCH/` is ever edited, and nothing in it is law.
+
+**The documents ship with the code.** They are in the repository, so they are in the image, the archive, and anything else built from it. That is the deliberate trade for a repository that explains itself; if a particular deployment must not carry them, exclude `codex/` at packaging time and record that here, because it is the kind of omission that surprises whoever ships next.
 
 -----
 

@@ -47,7 +47,7 @@ A "chapter" is one phase below (§4 onward) = one row of the milestone ladder (�
 3. **From the logic doc:** ONLY the `B.8.x` subsection(s) the step's `Freeze refs` name (+ the `§§` it cites) — not the whole logic doc.
 4. **The appendices the step points to:** `R1` (data shapes), `R2` (its stubs), `R3` (verification rules), `R6` (variable homes).
 5. **Once per session, the tail of `codex/DevLog.md`** — the latest handoff block and the open queue, **not the file**. That is where the previous session (possibly on another machine) recorded what state the tree is in and what the next action was. It is a **journal, not law**: it can tell you where things stand, and it can never tell you what to build or authorise a decision the freeze does not make.
-6. **Nothing else.** If the step seems to need more than this, that is a `CONTRACT-GAP` → HALT (do not go hunting for a decision). **Appendices R7 and R8 are Architect-side and are never loaded by a Builder** — R8 in particular is the protocol for auditing the freeze, and a Builder reading it would start negotiating with the law it is supposed to ride. **`Specification.md` is never loaded either**: it is the owner's original ask, frozen in `ARCH/`, and it was superseded by the logic doc on the day that document opened.
+6. **Nothing else.** If the step seems to need more than this, that is a `CONTRACT-GAP` → HALT (do not go hunting for a decision). **Appendices R7 and R8 are Architect-side and are never loaded by a Builder** — R8 in particular is the protocol for auditing the freeze, and a Builder reading it would start negotiating with the law it is supposed to ride. **`codex/Specification.md` is never loaded either**: it is the owner's original ask, frozen in place, and the logic document superseded it on the day that document opened. It sits beside the law precisely so the drift question can still be asked — by the Architect, never by a Builder mid-step.
 
 > **Sanctioned reference lookup — AI/LLM projects only (does not widen the reading order above).** On projects involving AI/LLM work, the Builder **may** consult the curated **skill base** for *technique and idiom* lookups — how a pattern is normally implemented, what a library's shape is, what a known pitfall looks like, what a working version of this looks like in a real system.
 >
@@ -184,7 +184,7 @@ On gap:          HALT + emit "CONTRACT-GAP: <precise description>" (ACCEPTANCE-D
 
 - **What each file DOES** → the annotation on its line below.
 - **HOW each file is constructed** → *initially* its stub (R2), *finally* the Frozen surface (verbatim B.8 signatures) of the step that owns it (the `(Step x.y)` tag).
-- **This is the BUILT PROJECT's tree** — it is NOT the design workspace these four documents live in. The design workspace (this file's own directory) holds only `Logic.md` / `Railroad.md` / `dependency.md` / `requirements.<ext>` and, optionally, an `ARCH/` archive of superseded logic-doc versions; it is not part of what gets deployed, and may not even be the same repository.
+- **This is the tree of the repository this file lives in.** The documents are not somewhere else: `codex/` below holds this file, the logic document, the specification, both manifests, the Dev Log and an append-only `ARCH/` (`Logic.md` §2.10). One consequence worth stating: the documents are therefore part of what gets deployed — a deployment that must not carry them excludes `codex/` when it packages, and says so in the logic document.
 
 **The authoritative file architecture is `Logic.md` §2.1 — not this section.** The tree there is a design decision with a stated why; what follows is the same tree seen from the build side, annotated with stub and ownership rules. **If the two ever disagree, `Logic.md` wins and the difference is a `CONTRACT-GAP`.** The skeleton below is the shape STC expects a filled-in §2.1 to have; it is assembled from the Project Profile (`Logic.md` §0.1), never copied wholesale. A directory that exists "for later" is a lie the scaffold step will faithfully build, and every stub in it becomes something a Builder must carry, register, and explain.
 
@@ -214,9 +214,17 @@ On gap:          HALT + emit "CONTRACT-GAP: <precise description>" (ACCEPTANCE-D
 ├─ logs/                         # runtime logs — [gitignored]
 ├─ misc/                         # the PRODUCT's own miscellany — belongs to the program, not to the build
 │
-├─ codex/                        # operator documentation  [optional], plus:
-│   └─ DevLog.md                 # the BUILDER's append-only journal — never law, never a decision.
-│                                #   Lives with the code so it survives a change of machine (§0 reading order)
+├─ codex/                        # THIS PROJECT'S OWN DOCUMENTS (Logic.md §2.10) — the law and the build
+│   │                            #   order live in the repository they describe, not in a separate workspace
+│   ├─ Logic Mk <N> Mod <M> A<K>.md  # THE LAW. The Builder reads only the B.8.x it is sent to (§0), never edits
+│   ├─ Railroad.md               # this file
+│   ├─ Specification.md          # the owner's original ask — FROZEN in place; NEVER loaded by a Builder (§0)
+│   ├─ dependency.md             # non-package-manager sources
+│   ├─ requirements.<ext>        # the pinned manifest, frozen at Step 0.0
+│   ├─ DevLog.md                 # the BUILDER's append-only journal — never law, never a decision.
+│   │                            #   Lives with the code so it survives a change of machine (§0 reading order)
+│   ├─ ARCH/                     # superseded document versions — never edited, never deleted
+│   └─ <operator documentation>       # [optional]
 └─ construction/                 # EVERYTHING that exists only because of the build process (Logic.md §2.4).
     │                            #   With codex/ these are the root's only two process entries; every
     │                            #   directory above them belongs to the program being built.

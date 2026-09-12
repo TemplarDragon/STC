@@ -2,7 +2,7 @@
 
 > **[STC template — delete this callout before use.]** The Builder's own notebook. Every other document in this project is **read-only law** for the Builder (`Railroad.md` §0); this is the one file it writes freely. Keep it short, append-only, and honest — including about what went wrong.
 
-**Lives here:** in the **built project's** repository, at `codex/DevLog.md` — *not* in the design workspace. Its entire job is continuity across sessions and machines, so it has to travel in the same repository as the code it describes. If the design documents live in a separate repo, this file does not follow them there.
+**Lives here:** at `codex/DevLog.md`, in the project's own repository, beside the law and the railroad (`Logic.md` §2.10). Its entire job is continuity across sessions and machines, so it travels in the same repository as the code it describes — which is now where every one of this project's documents lives.
 
 **Written by:** the Builder, every session, without being asked. **Read by:** the next session (whoever or whatever it is), and the Architect. **Never** cited as a reason for anything.
 

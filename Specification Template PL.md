@@ -8,7 +8,7 @@
 
 **Jedna granica, która utrzymuje ten dokument w użyteczności:** żadnych nazw plików, funkcji, flag konfiguracyjnych, bibliotek ani silników — nigdzie poza **§6.3**. Test jest prosty — *czy ktoś przeczytałby to bez otwierania repozytorium?* Jeśli nie, wszedłeś na teren `Logic.md`, i agent powinien Cię odesłać.
 
-**Co się z tym plikiem dzieje.** Piszesz pierwszą wersję, potem przerabiasz ją w rozmowie tyle rund, ile trzeba. Gdy **Ty** uznasz, że opisuje to, czego naprawdę chcesz, praca przechodzi do `Logic.md`, gdzie zapadają wszystkie decyzje techniczne. **Od tego dnia ten plik jest zamrożony, przeniesiony do `ARCH/` i nigdy więcej nie służy do budowania.** Jego jedyna pozostała rola to odpowiedź na *"jak bardzo to odeszło od tego, o co pierwotnie prosiłem?"* — a odpowie na to tylko wtedy, gdy nikt go potem nie „porządkował”.
+**Co się z tym plikiem dzieje.** Piszesz pierwszą wersję, potem przerabiasz ją w rozmowie tyle rund, ile trzeba. Gdy **Ty** uznasz, że opisuje to, czego naprawdę chcesz, praca przechodzi do `Logic.md`, gdzie zapadają wszystkie decyzje techniczne. **Od tego dnia ten plik jest zamrożony tam, gdzie jest — zostaje w `codex/`, nigdy nie jest już edytowany i nigdy nie służy do budowania.** Jego jedyna pozostała rola to odpowiedź na *"jak bardzo to odeszło od tego, o co pierwotnie prosiłem?"* — a odpowie na to tylko wtedy, gdy nikt go potem nie „porządkował”.
 
 ---
 
@@ -175,4 +175,4 @@ To nie formalność — przejście tej listy sprawia, że dokument techniczny da
 
 **Gdy to wszystko stoi, otwiera się `Logic.md`** — i każde dalsze doprecyzowanie logiki biznesowej dzieje się *tam*, łącznie z częściami, o których jeszcze nie pomyślałeś. Ten plik przestaje być edytowany tego samego dnia, bez wyjątków: jest teraz zapisem tego, o co pierwotnie prosiłeś, i ten zapis jest wart dokładnie tyle, ile jego opór wobec późniejszego porządkowania.
 
-`Specyfikacja zamrożona: <data> · przeniesiona do ARCH/ · Logic.md Mk <N> Mod <M> A<K> otwarty z niej`
+`Specyfikacja zamrożona: <data> · pozostaje w codex/Specification.md · Logic.md Mk <N> Mod <M> A<K> otwarty z niej · nieedytowana od napisania tej linii`

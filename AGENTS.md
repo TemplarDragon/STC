@@ -22,7 +22,7 @@ of construction instructions.
 This file is repository-maintenance metadata. It is not:
 
 - project law;
-- an STC design-workspace document;
+- a document in a project's `codex/`;
 - a project input or output;
 - a companion artifact;
 - part of Builder reading order;
@@ -38,7 +38,7 @@ the standing of any STC document.
 In particular:
 
 - `Specification.md` is an authoring input only;
-- after the STC-defined freeze, `Specification.md` is moved to `ARCH/`;
+- after the STC-defined freeze, `codex/Specification.md` is frozen in place and never edited again;
 - after that freeze, `Specification.md` is not project law and is never
   consulted for building;
 - `Logic.md` owns frozen project law;

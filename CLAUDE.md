@@ -11,7 +11,7 @@ It is repository-maintenance metadata. It is not:
 
 - an STC artifact;
 - project law;
-- part of the design workspace;
+- part of any project's `codex/`;
 - part of Builder reading order;
 - a Builder contract;
 - copied into a generated project.
