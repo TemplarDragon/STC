@@ -2,7 +2,7 @@
 
 **A project-agnostic standard for how a software project is specified, sequenced and verified — so that whoever writes the code, a coding agent or a person, builds against written intent instead of guessing it.**
 
-`Mk III Mod 1 A0` · [Logic](Logic%20Template.md) · [Railroad](Railroad%20Template.md) · [Specification](Specification%20Template.md) · [Methodology](supporting/Methodology.md)
+`Mk III Mod 1 A1` · [Logic](Logic%20Template.md) · [Railroad](Railroad%20Template.md) · [Specification](Specification%20Template.md) · [Methodology](supporting/Methodology.md)
 
 ---
 
@@ -88,4 +88,8 @@ The full procedure, including the checks to run before any code is generated, is
 
 ## Versioning
 
-Versions read `Mk · Mod · A`. An **A** clarifies without changing any structure; a **Mod** changes a rule, a section or a Pattern; a **Mk** changes what a project produces or how it is proven. Every project's `Logic.md` declares the version it was built against — today that is `Built against STC Mk III Mod 1 A0` — and a change to the standard is never retroactive. Every bump is recorded in the commit that makes it — [details](supporting/Methodology.md#how-the-standard-versions-itself).
+Versions read `Mk · Mod · A`. An **A** clarifies without changing any structure; a **Mod** changes a rule, a section or a Pattern; a **Mk** changes what a project produces or how it is proven. Every project's `Logic.md` declares the version it was built against — today that is `Built against STC Mk III Mod 1 A1` — and a change to the standard is never retroactive. Every bump is recorded in the commit that makes it — [details](supporting/Methodology.md#how-the-standard-versions-itself).
+
+## License
+
+© TemplarDragon. STC is licensed under [Creative Commons Attribution 4.0 International](LICENSE) (CC BY 4.0): you may use, adapt and share it, commercially too, as long as you give credit. Attribution can live where a project already names the standard — the `Built against STC …` line in its `Logic.md` — together with the author, a link to this repository and a link to the license.
