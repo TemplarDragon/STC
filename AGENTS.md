@@ -28,6 +28,10 @@ This file is repository-maintenance metadata. It is not:
 - part of Builder reading order;
 - copied into a generated project.
 
+A tool-specific adapter that imports this file — `CLAUDE.md` — shares this
+standing. It adds tool habits only: never a rule of its own, and never an
+instruction to Builder execution.
+
 ## Authority boundary
 
 Use only the authority model defined by STC.
@@ -153,9 +157,6 @@ They do not:
 - extend Builder reading order;
 - create acceptance criteria;
 - add project artifacts.
-
-For the optional AI/LLM reference-base protocol, use the existing README
-section *AI/LLM projects — the sanctioned skill base*.
 
 ## Completion
 
